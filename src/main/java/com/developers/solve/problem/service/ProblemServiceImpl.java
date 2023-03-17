@@ -1,6 +1,7 @@
 package com.developers.solve.problem.service;
 
 import com.developers.solve.problem.dto.ProblemSaveRequestDto;
+import com.developers.solve.problem.dto.ProblemSortResponseDTO;
 import com.developers.solve.problem.entity.Problem;
 import com.developers.solve.problem.repository.ProblemRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -17,6 +19,20 @@ public class ProblemServiceImpl implements ProblemService {
     private final ProblemRepository problemRepository;
     private final RestTemplate restTemplate;
 
+    @Override
+    public List<ProblemSortResponseDTO> sort1(String condition){
+        switch (condition) {
+            case "좋아요":
+                return problemRepository.findProblemByLikesIs();
+            case "조회수":
+                problemRepository.finaAll();
+            case "내가 푼 문제":
+                problemRepository.finaAll();
+            case "해시태그":
+        }
+        return problemRepository.finaAll(condition);
+    }
+    public String
     @Override
     public Long save(ProblemSaveRequestDto request) {
         /*

@@ -15,6 +15,7 @@ import org.hibernate.annotations.Where;
 @Where(clause = "deleted_at is NULL")
 @SQLDelete(sql = "update problem set deleted_at = CURRENT_TIMESTAMP where problem_id = ?")
 @Entity
+@Table(name="problem")
 public class Problem extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +28,7 @@ public class Problem extends BaseTimeEntity {
     private String writer;
     @Column(name = "title", length = 100, nullable = false)
     private String title;
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
     @Column(name = "answer", nullable = false)
     private String answer;
@@ -37,12 +38,12 @@ public class Problem extends BaseTimeEntity {
     @Column(name = "tag")
     private String tag;
     @Column(name = "views")
-    private Long views;
+    private Integer views;
     @Column(name = "likes")
-    private Long likes;
+    private Integer likes;
 
     @Builder
-    public Problem(Type type, String writer, String title, String content, String answer, Level level, String tag, Long views, Long likes) {
+    public Problem(Type type, String writer, String title, String content, String answer, Level level, String tag, Integer views, Integer likes) {
         this.type = type;
         this.writer = writer;
         this.title = title;
