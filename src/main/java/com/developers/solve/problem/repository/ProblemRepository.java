@@ -10,10 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ProblemRepository extends JpaRepository<Problem, Long> {
-    ArrayList<Problem> findAll();
+    @Query("SELECT p FROM Problem p JOIN ProblemHashtag t on p.problemId = t.hashtagId")
+    List<Problem> findByTags(@Param("tags") List<String> tags);
+    List<Problem> findByConditionOrderByDesc(String condition);
 
-    String finaAll(String sortcondition);
+    List<Problem> findByProblemInSolution(String condition);
 
-    @Query("select p from Problem p order by p.likes desc limit 10")
-    List<ProblemSortResponseDTO> findProblemByLikesIs();
+    List<Problem> findByProblemNotInSolution(String condition);
+
+    List<Problem> findByProblemLikeLevel(String condition);
+
+    List<Problem> findByProblmeLikeType(String condition);
 }
+
+
+
+

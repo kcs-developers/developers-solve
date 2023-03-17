@@ -35,22 +35,19 @@ public class Problem extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "level", nullable = false)
     private Level level;
-    @Column(name = "tag")
-    private String tag;
     @Column(name = "views")
-    private Integer views;
+    private Long views;
     @Column(name = "likes")
-    private Integer likes;
+    private Long likes;
 
     @Builder
-    public Problem(Type type, String writer, String title, String content, String answer, Level level, String tag, Integer views, Integer likes) {
+    public Problem(Type type, String writer, String title, String content, String answer, Level level, Long views, Long likes) {
         this.type = type;
         this.writer = writer;
         this.title = title;
         this.content = content;
         this.answer = answer;
         this.level = level;
-        this.tag = tag;
         this.views = views;
         this.likes = likes;
     }

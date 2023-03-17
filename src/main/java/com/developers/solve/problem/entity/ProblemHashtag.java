@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "problemId")
 @Getter
 @Entity
 @Table(name = "problemHashtag")
@@ -18,7 +18,7 @@ public class ProblemHashtag extends BaseTimeEntity {
     private Long hashtagId;
     @Column(name = "hashtagName", nullable = false)
     private String hashtagName;
-//    @Column(name = "problemId", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "problemId",nullable = false)
     private Problem problemId;
 }

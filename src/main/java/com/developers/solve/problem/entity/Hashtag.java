@@ -13,9 +13,9 @@ import lombok.ToString;
 public class Hashtag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hashTagId", nullable = false)
+    @Column(name = "tagId", nullable = false)
     private Long hasTagId;
-    @Column(name = "hashTagName", nullable = false)
+    @Column(name = "tagName", nullable = false)
     private String hastTagName;
 
 }
