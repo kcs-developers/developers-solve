@@ -27,7 +27,6 @@ public class ProblemRepositoryTest {
                 .content("Spring Boot의 장/단점 중 잘못된 것은 무엇인지 4가지 중에 골라주세요.")
                 .answer("1")
                 .level(Level.bronze)
-                .tag("#spring,#spring-boot")
                 .views(0L)
                 .likes(0L)
                 .build();

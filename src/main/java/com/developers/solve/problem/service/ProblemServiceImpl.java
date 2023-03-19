@@ -1,22 +1,59 @@
 package com.developers.solve.problem.service;
 
 import com.developers.solve.problem.dto.ProblemSaveRequestDto;
+import com.developers.solve.problem.dto.ProblemSortResponseDTO;
 import com.developers.solve.problem.entity.Problem;
 import com.developers.solve.problem.repository.ProblemRepository;
+import com.developers.solve.solution.repository.SolutionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
 public class ProblemServiceImpl implements ProblemService {
     private final ProblemRepository problemRepository;
+    private final SolutionRepository solutionRepository;
     private final RestTemplate restTemplate;
 
+    @Override
+    public List<Problem> searchProblem(String condition){
+        List<Problem> result = null;
+        if(condition.contains(",")) {
+            List<String> tags = List.of(condition.split(","));
+            result = problemRepository.findByTags(tags);
+        }
+        else {
+            switch (condition) {
+                case "likes": case "views": case "times":
+                    result = problemRepository.findByConditionOrderByDesc(condition);
+                    break;
+                // 난이도(하, 중, 상) 별 검색
+                case "bronze": case "silver": case "gold":
+                    result = problemRepository.findByProblemLikeLevel(condition);
+                    break;
+                //유형(객관식, 주관식) 별 검색
+                case "choice": case "answer":
+                    result = problemRepository.findByProblmeLikeType(condition);
+                // 푼 문제들
+                case "solved":
+                    result = problemRepository.findByProblemInSolution(condition);
+                    break;
+                // 안 푼 문제들
+                case "noneSolved":
+                    result = problemRepository.findByProblemNotInSolution(condition);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return null;
+    }
     @Override
     public Long save(ProblemSaveRequestDto request) {
         /*
@@ -35,7 +72,6 @@ public class ProblemServiceImpl implements ProblemService {
                 .content(request.getContent())
                 .answer(request.getAnswer())
                 .level(request.getLevel())
-                .tag(request.getTag())
                 .build();
 
         return problemRepository.save(problem).getProblemId();
