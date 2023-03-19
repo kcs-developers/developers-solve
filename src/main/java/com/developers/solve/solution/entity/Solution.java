@@ -28,7 +28,7 @@ public class Solution extends BaseTimeEntity {
     private String solved;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="problem_id") // 가져온 외래키 명을 설정해주는 애노테이션
+    @JoinColumn(name="problemid") // 가져온 외래키 명을 설정해주는 애노테이션
     private Problem problemId;
 
     @Builder
