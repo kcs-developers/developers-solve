@@ -5,8 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
-public class ProblemSaveResponseDto {
+@Builder
+public class SolutionSaveRequetDto {
+    private Long solutionId;
+    private Long userId;
+    private Long problemId;
 }
