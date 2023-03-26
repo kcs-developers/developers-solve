@@ -22,7 +22,7 @@ public class ProblemServiceTest {
 
     @Test
     public void pdfdf(){
-        List<ProblemSortResponseDTO> list = problemService.FirstSortProblem(null, null, "gold","solved", 1L);
+        List<ProblemSortResponseDTO> list = problemService.FirstSortProblem(null, null, null,"solved", 100L, "Cloud");
         System.out.println("+++++LIST: "+ i++ + list);
         //캐시에서 결과가져오기
 //        Cache cache = cacheManager.getCache("FirstSortProblem");

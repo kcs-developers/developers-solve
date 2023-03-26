@@ -3,11 +3,13 @@ package com.developers.solve.problem.repository;
 import com.developers.solve.problem.dto.ProblemSortResponseDTO;
 import com.developers.solve.problem.entity.Problem;
 import com.developers.solve.problem.entity.QProblem;
+import com.developers.solve.problem.entity.QProblemHashtag;
 import com.developers.solve.solution.entity.QSolution;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.util.StringUtils;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ public class ProblemQueryDsl {
 
     QProblem problem = QProblem.problem;
     QSolution solution = QSolution.solution;
+    QProblemHashtag problemHashtag = QProblemHashtag.problemHashtag;
 
     private OrderSpecifier<Long> getProblemSortedByViews(String order){
         if (!StringUtils.isNullOrEmpty(order)) {
@@ -74,6 +77,20 @@ public class ProblemQueryDsl {
     public List<Problem> getProblemSortedBySolved(String order,String types,String level,Long problemId){
         List<Problem> content1 = queryFactory.selectFrom(problem).join(solution).on(problem.problemId.eq(solution.problemId.problemId)).where(ProblemId(problemId),containLevel(level),containType(types)).orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order)).limit(100).fetch();
         return content1;
+    }
+    public List<Problem> getProblemSortedByHashTag(String order,String types,String level,Long problemId,String hashtag){
+        List<Problem> content = queryFactory.selectFrom(problem).where(problem.problemId.in(JPAExpressions.select(problemHashtag.problemId.problemId).from(problemHashtag).where(containHashTag(hashtag))),ProblemId(problemId),containLevel(level),containType(types)).orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order)).limit(100).fetch();
+        return content;
+    }
+    public List<Problem> getProblemSortedByHashTagAndSolved(String order,String types,String level,Long problemId,String hashtag){
+        List<Problem> content = queryFactory.selectFrom(problem).join(solution).on(problem.problemId.eq(solution.problemId.problemId)).where(problem.problemId.in(JPAExpressions.select(problemHashtag.problemId.problemId).from(problemHashtag).where(containHashTag(hashtag))),ProblemId(problemId),containLevel(level),containType(types)).orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order)).limit(100).fetch();
+        return content;
+    }
+    private BooleanExpression containHashTag(String hashtag){
+        if (!StringUtils.isNullOrEmpty(hashtag) && (hashtag.contains("CS")||hashtag.contains("FrontEnd")||hashtag.contains("BackEnd")||hashtag.contains("Cloud"))||hashtag.contains("Algorithm")){
+            return problemHashtag.hashtagName.contains(hashtag);
+        }
+        return null;
     }
     private BooleanExpression ProblemId(Long problemId){
         if (problemId == null){

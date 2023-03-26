@@ -23,8 +23,8 @@ import java.util.Map;
 public class ProblemController {
     private final ProblemService problemService;
     @GetMapping("/problem/list")
-    public ResponseEntity<List<ProblemSortResponseDTO>> sortProblem(@RequestParam(value = "order", required = true, defaultValue = "localTime") String order,@RequestParam(value = "types", required = false) String types, @RequestParam(value = "level", required = false) String level, @RequestParam(value = "solved", required = false) String solved, @RequestParam(value = "ProblemId", required = false) Long problemId,@RequestParam(value = "HashTag",required = false) String HashTag){
-        List<ProblemSortResponseDTO> response = problemService.FirstSortProblem(order,types,level,solved,problemId);
+    public ResponseEntity<List<ProblemSortResponseDTO>> sortProblem(@RequestParam(value = "order", required = true, defaultValue = "localTime") String order,@RequestParam(value = "types", required = false) String types, @RequestParam(value = "level", required = false) String level, @RequestParam(value = "solved", required = false) String solved, @RequestParam(value = "ProblemId", required = false) Long problemId,@RequestParam(value = "HashTag",required = false) String hashtag){
+        List<ProblemSortResponseDTO> response = problemService.FirstSortProblem(order,types,level,solved,problemId,hashtag);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 //    @GetMapping("/url")

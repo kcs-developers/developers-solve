@@ -2,9 +2,8 @@ package com.developers.solve.problem.entity;
 
 import com.developers.solve.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
 
 @NoArgsConstructor
 @ToString(exclude = "problemId")
@@ -21,4 +20,10 @@ public class ProblemHashtag extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "problemId",nullable = false)
     private Problem problemId;
+
+    @Builder
+    public ProblemHashtag(String hashtagName, Problem problemId){
+        this.hashtagName = hashtagName;
+        this.problemId = problemId;
+    }
 }

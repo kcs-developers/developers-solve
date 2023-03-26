@@ -45,13 +45,14 @@ public interface ProblemService {
     //        return null;
 //    //    }
 //    @Cacheable(cacheNames = "FirstSortProblem")
-    List<ProblemSortResponseDTO> FirstSortProblem(String order,String types,String level,String solved,Long problemId);
+    List<ProblemSortResponseDTO> FirstSortProblem(String order,String types,String level,String solved,Long problemId,String hashtag);
 //
 //    @Cacheable(cacheNames = "NotFirstSortProblem")
 //    List<ProblemSortResponseDTO> NotFirstSortProblem(String order,String types,String level,String solved,Long problemId);
 
     Long save(ProblemSaveRequestDto request);
     Long saveSolution(SolutionSaveRequetDto solutiondto);
+    Long saveHashTag(ProblemSaveRequestDto requestDto);
 
     default ProblemSortResponseDTO EntityToDto(Problem problem) {
 

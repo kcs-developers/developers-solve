@@ -4,6 +4,8 @@ import com.developers.solve.problem.dto.ProblemSaveRequestDto;
 import com.developers.solve.problem.dto.ProblemSortResponseDTO;
 import com.developers.solve.problem.dto.SolutionSaveRequetDto;
 import com.developers.solve.problem.entity.Problem;
+import com.developers.solve.problem.entity.ProblemHashtag;
+import com.developers.solve.problem.repository.HashTagRepository;
 import com.developers.solve.problem.repository.ProblemRepository;
 import com.developers.solve.problem.repository.ProblemQueryDsl;
 import com.developers.solve.solution.entity.Solution;
@@ -28,6 +30,7 @@ public class ProblemServiceImpl implements ProblemService {
     private final ProblemQueryDsl problemRepositoryImp;
     private final RestTemplate restTemplate;
     private final SolutionRepository solutionRepository;
+    private final HashTagRepository hashTagRepository;
 
 //    private final CacheManager cacheManager;
 
@@ -75,13 +78,17 @@ public class ProblemServiceImpl implements ProblemService {
 
 //    @Cacheable(cacheNames = "FirstSortProblem")
     @Override
-    public List<ProblemSortResponseDTO> FirstSortProblem(String order,String types,String level,String solved,Long problemId){
+    public List<ProblemSortResponseDTO> FirstSortProblem(String order,String types,String level,String solved,Long problemId,String hashtag){
         List<Problem> result = null;
         List<ProblemSortResponseDTO> problemSortResponseDTO;
-            if(!StringUtils.isNullOrEmpty(solved)){
+            if(!StringUtils.isNullOrEmpty(solved) && StringUtils.isNullOrEmpty(hashtag)){
                     result = this.problemRepositoryImp.getProblemSortedBySolved(order,types,level,problemId);
-            } else{
-                    result = this.problemRepositoryImp.getProblemSortedByLevel(order,types,level,problemId);
+            } else if (!StringUtils.isNullOrEmpty(hashtag) && StringUtils.isNullOrEmpty(solved)) {
+                    result = this.problemRepositoryImp.getProblemSortedByHashTag(order,types,level,problemId,hashtag);
+            } else if (!StringUtils.isNullOrEmpty(solved)&& !StringUtils.isNullOrEmpty(hashtag)) {
+                result = this.problemRepositoryImp.getProblemSortedByHashTagAndSolved(order,types,level,problemId,hashtag);
+            } else {
+                result = this.problemRepositoryImp.getProblemSortedByLevel(order,types,level,problemId);
             }
         problemSortResponseDTO = result.stream().map(this::EntityToDto).collect(toList());
         return problemSortResponseDTO;
@@ -160,7 +167,13 @@ public class ProblemServiceImpl implements ProblemService {
                 userId(request.getUserId()).problemId(problem).build();
         return solutionRepository.save(solution).getSolutionId();
     }
+    @Override
+    public Long saveHashTag(ProblemSaveRequestDto request){
+        Problem problem = Problem.builder().problemId(request.getProblemId()).build();
+        ProblemHashtag problemHashtag = ProblemHashtag.builder().hashtagName(request.getTag()).problemId(problem).build();
+        return hashTagRepository.save(problemHashtag).getHashtagId();
 
+    }
 //    @Override
 //    public Long register(ProblemSaveRequestDto dto) {
 //        Problem entity = dtoToEntity(dto);
