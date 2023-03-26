@@ -13,5 +13,5 @@ public interface SolutionRepository extends JpaRepository<Solution, Long> {
     @Override
     ArrayList<Solution> findAll();
 
-    List<Problem> findByTitleContaining(String keyword);
+
 }

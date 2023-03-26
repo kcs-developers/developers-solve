@@ -26,6 +26,7 @@ public class Solution extends BaseTimeEntity {
     private Long solver;
 
     @ManyToOne( fetch = FetchType.LAZY)
-    @JoinColumn(name="problemId", nullable = false)
+    @JoinColumn(name="problemid", nullable = false) //problemId -> problemid로 수정했음 확인 필요
     private Problem problem;
+
 }
