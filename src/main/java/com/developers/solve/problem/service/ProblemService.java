@@ -1,15 +1,18 @@
 package com.developers.solve.problem.service;
 
-import com.developers.solve.problem.dto.ProblemSaveRequestDto;
-import com.developers.solve.problem.dto.ProblemSortResponseDTO;
-import com.developers.solve.problem.dto.SolutionSaveRequetDto;
+import com.developers.solve.problem.dto.*;
 import com.developers.solve.problem.entity.Problem;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface ProblemService {
     //List<Problem> searchProblem(String condition);
+
+    //Page<Entity> 에서 Page<DTO>변환은 단순 map을 통해서 바꿀수 있다???
+    //condition = 0&likes&solved
+    //condition = 1&likes&soleved&type
 
     //    @Override
     //    public List<Problem> searchProblem(String condition){
@@ -53,6 +56,16 @@ public interface ProblemService {
     Long save(ProblemSaveRequestDto request);
     Long saveSolution(SolutionSaveRequetDto solutiondto);
     Long saveHashTag(ProblemSaveRequestDto requestDto);
+    @Transactional
+    void addViewCntToRedis(Long problemId);
+    @Transactional
+    void addLikesCntToRedis(Long problemId);
+    @Transactional
+    void deleteViewCntToRedis();
+    @Transactional
+    void deleteLikesCntToRedis();
+    @Transactional
+    void updateproblem(ProblemUpdateRequestDto problemUpdateRequestDto);
 
     default ProblemSortResponseDTO EntityToDto(Problem problem) {
 

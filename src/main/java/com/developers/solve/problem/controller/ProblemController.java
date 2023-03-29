@@ -1,7 +1,9 @@
 package com.developers.solve.problem.controller;
 
+import com.developers.solve.problem.dto.ProblemDetailResponseDto;
 import com.developers.solve.problem.dto.ProblemSaveRequestDto;
 import com.developers.solve.problem.dto.ProblemSortResponseDTO;
+import com.developers.solve.problem.dto.ProblemUpdateRequestDto;
 import com.developers.solve.problem.entity.Problem;
 import com.developers.solve.problem.service.ProblemService;
 import lombok.RequiredArgsConstructor;
@@ -23,23 +25,26 @@ import java.util.Map;
 public class ProblemController {
     private final ProblemService problemService;
     @GetMapping("/problem/list")
-    public ResponseEntity<List<ProblemSortResponseDTO>> sortProblem(@RequestParam(value = "order", required = true, defaultValue = "localTime") String order,@RequestParam(value = "types", required = false) String types, @RequestParam(value = "level", required = false) String level, @RequestParam(value = "solved", required = false) String solved, @RequestParam(value = "ProblemId", required = false) Long problemId,@RequestParam(value = "HashTag",required = false) String hashtag){
+    public ResponseEntity<List<ProblemSortResponseDTO>> sortProblem(@RequestParam(value = "order", required = true, defaultValue = "localTime") String order,
+                                                                    @RequestParam(value = "types", required = false) String types,
+                                                                    @RequestParam(value = "level", required = false) String level,
+                                                                    @RequestParam(value = "solved", required = false) String solved,
+                                                                    @RequestParam(value = "problemId", required = false) Long problemId,
+                                                                    @RequestParam(value = "hashTag",required = false) String hashtag){
         List<ProblemSortResponseDTO> response = problemService.FirstSortProblem(order,types,level,solved,problemId,hashtag);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-//    @GetMapping("/url")
-//    public void getList(@RequestParam Map<String, String> paramMap) {
-//        String sort1 = paramMap.get("sort1");
-//        String sort2 = paramMap.get("sort2");
-//        String sort3 = paramMap.get("sort3");
-//        String sort4 = paramMap.get("sort4");
-//        String sort5 = paramMap.get("sort5");
-//        String sort6 = paramMap.get("sort6");
-//        String[] tags = paramMap.get("tag").split(",");
-//        System.out.println(sort1+ " " + sort2 + " " + Arrays.toString(tags));
-//    }
-    @PostMapping("/url")
-    public void resgister(@RequestBody ProblemSaveRequestDto dto){
-        this.problemService.save(dto);
+    @GetMapping("/problem/{problemId}")
+    public ResponseEntity<ProblemDetailResponseDto> detailProblem(@PathVariable Long problemId) {
+        problemService.addViewCntToRedis(problemId);
+        return null;
+    }
+    @GetMapping("/problem/likes/{problemId}")
+    public void likesAdd(@PathVariable Long problemId){
+        problemService.addLikesCntToRedis(problemId);
+    }
+    @PostMapping("/problem/update")
+    public void update(@RequestBody ProblemUpdateRequestDto problemUpdateRequestDto){
+        problemService.updateproblem(problemUpdateRequestDto);
     }
 }

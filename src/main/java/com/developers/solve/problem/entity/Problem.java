@@ -9,13 +9,15 @@ import lombok.ToString;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @ToString
 @Getter
 @Where(clause = "deleted_at is NULL")
 @SQLDelete(sql = "update problem set deleted_at = CURRENT_TIMESTAMP where problem_id = ?")
 @Entity
-public class Problem extends BaseTimeEntity {
+public class Problem extends BaseTimeEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "problemId", nullable = false)

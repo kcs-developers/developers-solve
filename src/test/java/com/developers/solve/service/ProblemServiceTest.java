@@ -33,4 +33,9 @@ public class ProblemServiceTest {
 //        List<ProblemSortResponseDTO> list = problemService.NotFirstSortProblem("likes,types", 10L);
 //        System.out.println("List:" + list);
 //    }
+    @Test
+    public void RedisTest() {
+        problemService.addViewCntToRedis(1L);
+    }
 }
+
