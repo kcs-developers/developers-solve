@@ -2,15 +2,13 @@ package com.developers.solve.problem.entity;
 
 import com.developers.solve.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import java.io.Serializable;
-
+@AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @ToString
 @Getter
@@ -20,11 +18,11 @@ import java.io.Serializable;
 public class Problem extends BaseTimeEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "problemId", nullable = false)
+    @Column(name = "problem_id", nullable = false)
     private Long problemId;
     @Column(name = "type", nullable = false)
     private String type;
-    @Column(name = "writer", length = 10, nullable = false)
+    @Column(name = "writer", length = 100, nullable = false)
     private String writer;
     @Column(name = "title", length = 100, nullable = false)
     private String title;
@@ -39,17 +37,7 @@ public class Problem extends BaseTimeEntity implements Serializable {
     private Long views;
     @Column(name = "likes")
     private Long likes;
+    @Column(name = "hashtag")
+    private String hashtag;
 
-    @Builder
-    public Problem(Long problemId, String type, String writer, String title, String content, String answer, String level, Long views, Long likes) {
-        this.problemId = problemId;
-        this.type = type;
-        this.writer = writer;
-        this.title = title;
-        this.content = content;
-        this.answer = answer;
-        this.level = level;
-        this.views = views;
-        this.likes = likes;
-    }
 }

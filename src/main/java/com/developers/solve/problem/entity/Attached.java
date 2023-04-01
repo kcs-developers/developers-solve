@@ -13,6 +13,6 @@ import org.hibernate.annotations.Where;
 public class Attached {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "attachId")
+    @Column(name = "attach_id")
     private Long attachId;
 }

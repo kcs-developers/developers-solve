@@ -22,16 +22,16 @@ public class Solution extends BaseTimeEntity {
     @Column(name = "solutionId")
     private Long solutionId;
 
-    @Column(name = "userId", nullable = false)
-    private Long userId;
+    @Column(name = "writer", nullable = false)
+    private String writer;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "problemId") // 가져온 외래키 명을 설정해주는 애노테이션
     private Problem problemId;
 
     @Builder
     // 외래키는 값이 바뀌지 않고 PK도 바뀌지 않으므로 solver, solved만 빌갖
-    public Solution(Long userId, Problem problemId) {
-        this.userId = userId;
+    public Solution(String writer, Problem problemId) {
+        this.writer = writer;
         this.problemId = problemId;
 
     }

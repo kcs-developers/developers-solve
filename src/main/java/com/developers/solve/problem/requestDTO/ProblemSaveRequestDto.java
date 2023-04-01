@@ -1,6 +1,5 @@
-package com.developers.solve.problem.dto;
+package com.developers.solve.problem.requestDTO;
 
-import com.developers.solve.problem.entity.Problem;
 import lombok.*;
 
 @NoArgsConstructor
@@ -16,6 +15,7 @@ public class ProblemSaveRequestDto {
     private String answer;
     private String level;
     private String tag;
+    private Long id;
 
 }
 

@@ -37,7 +37,7 @@ public class QSolution extends EntityPathBase<Solution> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
-    public final NumberPath<Long> userId = createNumber("userId", Long.class);
+    public final StringPath writer = createString("writer");
 
     public QSolution(String variable) {
         this(Solution.class, forVariable(variable), INITS);

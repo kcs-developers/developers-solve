@@ -12,28 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface ProblemRepository extends JpaRepository<Problem, Long>{
-//    @Query("SELECT p FROM Problem p JOIN ProblemHashtag t on t.hashtagName where t.hashtagName in :tags")
-//    List<Problem> findByTags(@Param("tags") List<String> tags);
-//
-//    List<Problem> findByConditionOrderByDesc(String condition);
-//
-//    List<Problem> findByProblemLikeLevel(String condition);
-//
-//    List<Problem> findByProblmeLikeType(String condition);
-//
-//    List<Problem> findByProblemInSolution(String condition);
-//
-//    List<Problem> findByProblemNotInSolution(String condition);
-//    @Query("SELECT p FROM Solution s INNER JOIN Problem p on s.problemId = p")
-//    Page<Problem> getProblemBySolved(String condition, Pageable pageable);
+public interface ProblemRepository extends JpaRepository<Problem, Long> {
     @Query("SELECT p.views FROM Problem p where p.problemId = :problemId")
     Long getViewsCnt(Long problemId);
+
     @Query("SELECT p.likes FROM Problem p where p.problemId = :problemId")
     Long getLikesCnt(Long problemId);
-
-    @Modifying
-    @Transactional
-    @Query("UPDATE Problem p SET p.answer = :answer, p.writer = :writer, p.title = :title WHERE p.problemId = :problemId")
-    void updateViews(Long problemId, String answer, String writer, String title);
 }

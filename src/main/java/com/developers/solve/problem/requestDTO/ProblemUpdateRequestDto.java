@@ -1,4 +1,4 @@
-package com.developers.solve.problem.dto;
+package com.developers.solve.problem.requestDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class SolutionSaveRequetDto {
-    private Long solutionId;
-    private Long userId;
+public class ProblemUpdateRequestDto {
     private Long problemId;
+    private String answer;
+    private String writer;
+    private String title;
 }

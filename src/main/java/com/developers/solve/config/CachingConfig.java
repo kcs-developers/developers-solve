@@ -18,7 +18,7 @@ public class CachingConfig {
     @Bean
     public CacheManager cacheManager() {
         ConcurrentMapCacheManager cacheManager = new ConcurrentMapCacheManager();
-        cacheManager.setCacheNames(Arrays.asList("FirstSortProblem","NotFirstSortProblem"));
+        cacheManager.setCacheNames(Arrays.asList("SortStorage"));
         return cacheManager;
     }
 }
