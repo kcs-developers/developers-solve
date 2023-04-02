@@ -15,8 +15,6 @@ import util.OrderByNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.querydsl.jpa.JPAExpressions.select;
-
 @Repository
 @RequiredArgsConstructor
 public class ProblemQueryDsl {

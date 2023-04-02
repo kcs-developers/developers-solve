@@ -91,7 +91,7 @@ public class ProblemServiceTest {
     public void testSave(){
         //given
 
-        String url = "http://localhost:8000/api/member/1";
+        String url = "http://localhost:9000/api/member/1";
         Map<String,String> res = restTemplate.getForObject(url, Map.class);
         String restResult = res.get("memberName");
         System.out.println(restResult);
@@ -122,7 +122,7 @@ public class ProblemServiceTest {
     @Test
     public void problemDetailSolved() {
         // given
-        String url = "http://localhost:8000/api/member/1";
+        String url = "http://localhost:9000/api/member/1";
         Map<String,String> res = restTemplate.getForObject(url, Map.class);
         String restResult = res.get("memberName");
 
@@ -164,7 +164,7 @@ public class ProblemServiceTest {
     @Test
     public void problemDetailNotSolved() {
         // given
-        String url = "http://localhost:8000/api/member/1";
+        String url = "http://localhost:9000/api/member/1";
         Map<String,String> res = restTemplate.getForObject(url, Map.class);
         String restResult = res.get("memberName");
 

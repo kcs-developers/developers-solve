@@ -125,7 +125,7 @@ public class ProblemServiceImpl implements ProblemService {
     public ProblemSaveResponseDto save(ProblemSaveRequestDto problemSaveRequestDto){
 
 
-        String url = "http://localhost:8000/api/member/"+problemSaveRequestDto.getId();
+        String url = "http://localhost:9000/api/member/"+problemSaveRequestDto.getId();
         Map<String,String> res = restTemplate.getForObject(url, Map.class);
         String restResult = res.get("memberName");
 

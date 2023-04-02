@@ -32,7 +32,7 @@ public class solutionServiceTest {
     public void Save() {
         // given
 
-        String url = "http://localhost:8000/api/member/1";
+        String url = "http://localhost:9000/api/member/1";
         Map<String,String> res = restTemplate.getForObject(url, Map.class);
         String restResult = res.get("memberName");
         SolutionRequest request = SolutionRequest.builder()
@@ -61,7 +61,7 @@ public class solutionServiceTest {
     public void Save1() {
         // given
 
-        String url = "http://localhost:8000/api/member/1";
+        String url = "http://localhost:9000/api/member/1";
         Map<String,String> res = restTemplate.getForObject(url, Map.class);
         String restResult = res.get("memberName");
         System.out.println(restResult);
