@@ -100,7 +100,7 @@ public class ProblemQueryDsl {
     }
     private BooleanExpression containWriter(String writer){
         if(!StringUtils.isNullOrEmpty(writer)){
-            return  solution.writer.eq(writer);
+            return  solution.solver.contains(writer);
         }
         return null;
     }

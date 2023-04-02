@@ -1,5 +1,4 @@
 package com.developers.solve.problem.responseDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class ProblemDetailResponseDto {
+//안쓰는거 아닌가'
+public class ProblemSaveResponseDto {
     private String code;
     private String msg;
-    private ProblemDetailDto data;
-
+    private ProblemSaveDetailResponseDto data;
 }

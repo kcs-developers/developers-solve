@@ -1,5 +1,6 @@
 package com.developers.solve.problem.responseDTO;
 
+import com.developers.solve.problem.entity.Problem;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,9 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class ProblemDetailResponseDto {
+public class ProblemUpdateResponseDto {
     private String code;
     private String msg;
-    private ProblemDetailDto data;
-
+    private Problem data;
 }
