@@ -126,7 +126,7 @@ public class ProblemServiceImpl implements ProblemService {
          * 이 때, 사용자 서비스에 작성자 유효성 검사 API 요청하여 요청에 대한 응답으로 작성자의 닉네임을 반환받는다.
          * 현재는 개발 초기 단계이니 임의의 값을 writer에 삽입하여 테스트하고 이후 사용자 관리 서비스가 개발되면 RestTemplate을 사용하자.
          * */
-        String url = "http://192.168.99.13:8000/api/member/" + request.getId();
+        String url = "http://192.168.99.13:9000/api/member/" + request.getId();
         Map<String, String> res = restTemplate.getForObject(url, Map.class);
         String result = res.get("memberName");
 
@@ -168,7 +168,7 @@ public class ProblemServiceImpl implements ProblemService {
         ProblemDetailDto dto = ProblemDetailDto.builder()
                 .problemId(problem.getProblemId())
                 .type(problem.getType())
-                .writer(problem.getWriter()) //writerId?
+                .writer(problem.getWriter())
                 .title(problem.getTitle())
                 .content(problem.getContent())
                 .hashTag(problem.getHashtag())
