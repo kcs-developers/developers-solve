@@ -7,32 +7,26 @@ import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-@Entity
-@Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Builder
 @Where(clause = "deleted_at is NULL")
-@SQLDelete(sql = "update solution set deleted_at = CURRENT_TIMESTAMP where solutionid = ?")
+@SQLDelete(sql = "update solution set deleted_at = CURRENT_TIMESTAMP where solution_id = ?")
 @Table(name="solution")
-@ToString(exclude = "problemId")
-
+@ToString(exclude = "solution_id")
+@Entity
 public class Solution extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "solutionId")
+    @Column(name="solution_id")
     private Long solutionId;
 
-    @Column(name = "writer", nullable = false)
-    private String writer;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "problemId") // 가져온 외래키 명을 설정해주는 애노테이션
-    private Problem problemId;
+    @Column(name="solver", nullable = false)
+    private String solver;
 
-    @Builder
-    // 외래키는 값이 바뀌지 않고 PK도 바뀌지 않으므로 solver, solved만 빌갖
-    public Solution(String writer, Problem problemId) {
-        this.writer = writer;
-        this.problemId = problemId;
+    @ManyToOne( fetch = FetchType.LAZY)
+    @JoinColumn(name="problem_id", nullable = false)
+    private Problem problem;
 
-    }
 }

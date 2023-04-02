@@ -56,7 +56,7 @@ public class ProblemQueryDsl {
         return content;
     }
     public List<Problem> getProblemSortedBySolved(String order,String types,String level,String hashtag,Long likes,Long views,String createdTime, String writer){
-        List<Problem> content = queryFactory.selectFrom(problem).where(problem.problemId.in(JPAExpressions.select(solution.problemId.problemId).from(solution).where(containWriter(writer))),containHashTag(hashtag),CreatedTimeNoOffset(createdTime),LikesNoOffset(likes), ViewsNoOffset(views),containLevel(level),containType(types)).orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order)).limit(100).fetch();
+        List<Problem> content = queryFactory.selectFrom(problem).where(problem.problemId.in(JPAExpressions.select(solution.problem.problemId).from(solution).where(containWriter(writer))),containHashTag(hashtag),CreatedTimeNoOffset(createdTime),LikesNoOffset(likes), ViewsNoOffset(views),containLevel(level),containType(types)).orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order)).limit(100).fetch();
         return content;
     }
     private BooleanExpression containHashTag(String hashtag){
@@ -64,7 +64,7 @@ public class ProblemQueryDsl {
             return null;
         }
         if (!StringUtils.isNullOrEmpty(hashtag) && (hashtag.contains("CS")||hashtag.contains("FrontEnd")||hashtag.contains("BackEnd")||hashtag.contains("Cloud"))||hashtag.contains("Algorithm")){
-            return problem.hashtag.contains(hashtag);
+            return problem.hashTag.contains(hashtag);
         }
         return null;
     }
@@ -100,7 +100,7 @@ public class ProblemQueryDsl {
     }
     private BooleanExpression containWriter(String writer){
         if(!StringUtils.isNullOrEmpty(writer)){
-            return  solution.writer.eq(writer);
+            return  solution.solver.eq(writer);
         }
         return null;
     }

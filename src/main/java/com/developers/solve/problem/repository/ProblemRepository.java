@@ -10,6 +10,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ProblemRepository extends JpaRepository<Problem, Long> {
@@ -18,4 +19,8 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
 
     @Query("SELECT p.likes FROM Problem p where p.problemId = :problemId")
     Long getLikesCnt(Long problemId);
+
+    @Override
+    ArrayList<Problem> findAll();
+    List<Problem> findByTitleContaining(String param);
 }

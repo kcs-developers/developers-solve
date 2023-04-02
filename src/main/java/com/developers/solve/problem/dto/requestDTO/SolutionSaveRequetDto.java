@@ -1,4 +1,4 @@
-package com.developers.solve.problem.requestDTO;
+package com.developers.solve.problem.dto.requestDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

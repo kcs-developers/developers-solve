@@ -15,7 +15,7 @@ public class Hashtag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id", nullable = false)
     private Long hasTagId;
-    @Column(name = "tagName", nullable = false)
+    @Column(name = "tag_name", nullable = false)
     private String hastTagName;
 
 }

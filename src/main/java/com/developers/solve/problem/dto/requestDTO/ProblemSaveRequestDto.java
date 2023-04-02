@@ -1,4 +1,4 @@
-package com.developers.solve.problem.requestDTO;
+package com.developers.solve.problem.dto.requestDTO;
 
 import lombok.*;
 
@@ -13,8 +13,10 @@ public class ProblemSaveRequestDto {
     private String title;
     private String content;
     private String answer;
+    private String hashtag;
     private String level;
-    private String tag;
+    private Long views;
+    private Long likes;
     private Long id;
 
 }

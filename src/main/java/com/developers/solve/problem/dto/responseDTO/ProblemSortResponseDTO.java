@@ -1,15 +1,19 @@
-package com.developers.solve.problem.responseDTO;
+package com.developers.solve.problem.dto.responseDTO;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Data
-public class ProblemDetailResponseDto {
+public class ProblemSortResponseDTO {
+
     private Long problemId;
     private String type;
     private String writer;
@@ -20,5 +24,6 @@ public class ProblemDetailResponseDto {
     private String tag;
     private Long views;
     private Long likes;
-    private String attached;
-}
+    private LocalDateTime createdTime;
+    private String hashTag;
+    }

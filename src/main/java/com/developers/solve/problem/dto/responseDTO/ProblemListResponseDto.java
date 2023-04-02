@@ -1,4 +1,4 @@
-package com.developers.solve.problem.responseDTO;
+package com.developers.solve.problem.dto.responseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Builder
-public class SortResponseDTO {
+public class ProblemListResponseDto {
+    private String code;
     private String msg;
-    private String status;
-    private List<ProblemSortResponseDTO> data;
+    private List<ProblemDetailDto> data;
 }

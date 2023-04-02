@@ -31,7 +31,7 @@ public class QProblem extends EntityPathBase<Problem> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
 
-    public final StringPath hashtag = createString("hashtag");
+    public final StringPath hashTag = createString("hashTag");
 
     public final StringPath level = createString("level");
 

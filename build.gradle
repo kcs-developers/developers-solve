@@ -45,6 +45,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     //RestTemplate 연결 재시도를 위한 의존성 추가
     implementation 'org.springframework.retry:spring-retry:1.2.5.RELEASE'
+    implementation 'redis.clients:jedis:3.7.0'
+
 
 
 }
