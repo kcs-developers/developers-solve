@@ -52,11 +52,20 @@ public class ProblemQueryDsl {
         queryFactory.update(problem).set(problem.likes, likes).where(problem.problemId.eq(problemId)).execute();
     }
     public List<Problem> getProblemSortedByNotSolved(String order,String types,String level,String hashtag,Long likes,Long views,String createdTime){
-        List<Problem> content = queryFactory.selectFrom(problem).where(containHashTag(hashtag),CreatedTimeNoOffset(createdTime),LikesNoOffset(likes), ViewsNoOffset(views),containLevel(level),containType(types)).orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order)).limit(500).fetch();
+        List<Problem> content = queryFactory.selectFrom(problem)
+                .where(containHashTag(hashtag),CreatedTimeNoOffset(createdTime),LikesNoOffset(likes), ViewsNoOffset(views),containLevel(level),containType(types))
+                .orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order))
+                .limit(500)
+                .fetch();
         return content;
     }
     public List<Problem> getProblemSortedBySolved(String order,String types,String level,String hashtag,Long likes,Long views,String createdTime, String writer){
-        List<Problem> content = queryFactory.selectFrom(problem).where(problem.problemId.in(JPAExpressions.select(solution.problemId.problemId).from(solution).where(containWriter(writer))),containHashTag(hashtag),CreatedTimeNoOffset(createdTime),LikesNoOffset(likes), ViewsNoOffset(views),containLevel(level),containType(types)).orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order)).limit(100).fetch();
+        List<Problem> content = queryFactory.selectFrom(problem)
+                .where(problem.problemId.in(JPAExpressions.select(solution.problemId.problemId)
+                .from(solution).where(containWriter(writer))),containHashTag(hashtag),CreatedTimeNoOffset(createdTime),LikesNoOffset(likes), ViewsNoOffset(views),containLevel(level),containType(types))
+                .orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order))
+                .limit(100)
+                .fetch();
         return content;
     }
     private BooleanExpression containHashTag(String hashtag){

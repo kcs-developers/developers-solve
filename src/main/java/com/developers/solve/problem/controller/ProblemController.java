@@ -1,5 +1,6 @@
 package com.developers.solve.problem.controller;
 
+import com.developers.solve.problem.requestDTO.AttachedDto;
 import com.developers.solve.problem.requestDTO.ProblemSaveRequestDto;
 import com.developers.solve.problem.responseDTO.*;
 import com.developers.solve.problem.requestDTO.ProblemUpdateRequestDto;
@@ -20,7 +21,7 @@ public class ProblemController {
     private final ProblemService problemService;
     //문제 다중 조건 검색
     @GetMapping("/problem/list")
-    public ResponseEntity<SortResponseDTO> sortProblem(@RequestParam(value = "order", required = true, defaultValue = "localTime") String order,
+    public ResponseEntity<SortResponseDTO> sortProblem(@RequestParam(value = "order", required = true, defaultValue = "createdTime") String order,
                                                                     @RequestParam(value = "types", required = false) String types,
                                                                     @RequestParam(value = "level", required = false) String level,
                                                                     @RequestParam(value = "solved", required = false) String solved,
@@ -32,6 +33,15 @@ public class ProblemController {
     {
         SortResponseDTO response;
         if(StringUtils.isNullOrEmpty(solved)) {
+            if (StringUtils.isNullOrEmpty(types) && StringUtils.isNullOrEmpty(level) && StringUtils.isNullOrEmpty(hashtag) && order.equals("createdTime")){
+                List<ProblemSortResponseDTO> result = problemService.CreatedTimeSortList();
+                response = SortResponseDTO.
+                        builder().
+                        msg("Success sort").
+                        status("stauts Code 200").
+                        data(result).
+                        build();
+            }
             List<ProblemSortResponseDTO> result = problemService.NotIncludeSolvedSort(order, types, level, solved, hashtag, views, likes, createdTime, writer);
             response = SortResponseDTO.
                     builder().
@@ -40,7 +50,7 @@ public class ProblemController {
                     data(result).
                     build();
         }
-        else{
+         else {
             List<ProblemSortResponseDTO> result = problemService.IncludeSolvedSort(order, types, level, solved, hashtag, views, likes, createdTime, writer);
             response = SortResponseDTO.
                     builder().
@@ -87,6 +97,12 @@ public class ProblemController {
     @GetMapping("/problem")
     public ResponseEntity<List<ProblemSortResponseDTO>> searchProblem(@RequestParam(value = "search") String search){
         List<ProblemSortResponseDTO> result = problemService.getListWithSearch(search);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+    //첨부파일 업로드
+    @PostMapping("/S3/upload")
+    public ResponseEntity <Object> S3register(@RequestBody AttachedDto attachedDto){
+        String result = problemService.uploadAttached(attachedDto);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

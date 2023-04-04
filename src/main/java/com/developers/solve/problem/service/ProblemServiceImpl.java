@@ -1,14 +1,20 @@
 package com.developers.solve.problem.service;
 
+import com.developers.solve.problem.entity.Attached;
 import com.developers.solve.problem.entity.Problem;
+import com.developers.solve.problem.repository.AttachedRepository;
 import com.developers.solve.problem.repository.ProblemQueryDsl;
 import com.developers.solve.problem.repository.ProblemRepository;
+import com.developers.solve.problem.requestDTO.AttachedDto;
 import com.developers.solve.problem.requestDTO.ProblemSaveRequestDto;
 import com.developers.solve.problem.requestDTO.ProblemUpdateRequestDto;
 import com.developers.solve.problem.responseDTO.*;
 import com.developers.solve.solution.repository.SolutionRepository;
 import com.querydsl.core.util.StringUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -30,6 +36,7 @@ public class ProblemServiceImpl implements ProblemService {
     private final RestTemplate restTemplate;
     private final SolutionRepository solutionRepository;
     private final RedisTemplate<String,Object> redisTemplate;
+    private final AttachedRepository attachedRepository;
 
 
 
@@ -99,6 +106,40 @@ public class ProblemServiceImpl implements ProblemService {
         }
         System.out.println("likes update complete");
     }
+    @Cacheable(cacheNames = "CreatedTimeSort")
+    @Override
+    public List<ProblemSortResponseDTO> CreatedTimeSortList(){
+        List<Problem> result = null;
+        List<ProblemSortResponseDTO> problemSortResponseDTO;
+
+            result = problemRepository.CreatedTimeSort();
+        problemSortResponseDTO = result.stream().map(this::EntityToDto).collect(toList());
+        return problemSortResponseDTO;
+
+    }
+    @CacheEvict(cacheNames = "CreatedTimeSort")
+    @Override
+    public void CreatedTimeSortCacheEvict(){
+    }
+    @Scheduled(fixedDelay = 1000L*80L)
+    @Override
+    public void CreatedCacheUpdate(){
+        CreatedTimeSortCacheEvict();
+        CreatedTimeSortList();
+    }
+//    @Cacheable(cacheNames = "SubCreatTimeSort")
+//    @Override
+//    public void
+//    @Cacheable(cacheNames = "ViewsSort")
+//    @Override
+//    public List<ProblemSortResponseDTO> ViewsSort(Long views){
+//        List<Problem> result = null;
+//        List<ProblemSortResponseDTO> problemSortResponseDTO;
+//        result = problemRepository.ViewsSort(views);
+//        problemSortResponseDTO = result.stream().map(this::EntityToDto).collect(toList());
+//        return problemSortResponseDTO;
+//    }
+
     @Override
     public List<ProblemSortResponseDTO> NotIncludeSolvedSort(String order, String types, String level, String solved, String hashtag, Long views, Long likes, String createdTime, String writer){
         List<Problem> result = null;
@@ -231,6 +272,21 @@ public class ProblemServiceImpl implements ProblemService {
         List<ProblemSortResponseDTO> dtoList = problemRepository.findByTitleContaining(search.replaceAll("\\s+", " "))
                 .stream().map(this::EntityToDto).toList();
         return dtoList;
+    }
+
+    @Transactional
+    @Override
+    public String uploadAttached(AttachedDto attachedDto){
+        List<String> pathList = attachedDto.getPathname();
+        for (int i=0; i < pathList.size(); i++){
+            String result = pathList.get(i);
+            Attached attachedDto1 = Attached.builder()
+                    .pathName(result)
+                    .problemId(attachedDto.getProblemId())
+                    .build();
+            attachedRepository.save(attachedDto1);}
+        String response = "Attached Updated Success";
+        return response;
     }
 
 

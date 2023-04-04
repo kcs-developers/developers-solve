@@ -14,7 +14,6 @@ import org.hibernate.annotations.Where;
 @Where(clause = "deleted_at is NULL")
 @SQLDelete(sql = "update solution set deleted_at = CURRENT_TIMESTAMP where solution_id = ?")
 @Table(name="solution")
-@ToString(exclude = "solution_id")
 
 public class Solution extends BaseTimeEntity {
     @Id

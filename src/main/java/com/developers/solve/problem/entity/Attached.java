@@ -15,4 +15,11 @@ public class Attached {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attach_id")
     private Long attachId;
+    @Column(name = "path_name")
+    private String pathName;
+    //메서드 2개 실행해서 조회, delete, update도 추가
+    //상세조회시 따로 따로
+    @Column(name = "problem_id")
+    private Long problemId;
+
 }

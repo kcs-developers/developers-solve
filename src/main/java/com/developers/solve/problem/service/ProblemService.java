@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface ProblemService {
+    void CreatedTimeSortCacheEvict();
+    void CreatedCacheUpdate();
+    @Transactional
+    String uploadAttached(AttachedDto attachedDto);
+    List<ProblemSortResponseDTO> CreatedTimeSortList();
     List<ProblemSortResponseDTO> NotIncludeSolvedSort(String order, String types, String level, String solved, String hashtag, Long views, Long likes, String createdTime, String writer);
     List<ProblemSortResponseDTO> IncludeSolvedSort(String order, String types, String level, String solved, String hashtag, Long views, Long likes, String createdTime, String writer);
     ProblemSaveResponseDto save(ProblemSaveRequestDto request);
@@ -43,7 +48,10 @@ public interface ProblemService {
                     build();
         return dto;
     }
-
     ProblemDetailResponseDto problemDetail(Long problemId, String member);
+
+
+
+
 }
 
