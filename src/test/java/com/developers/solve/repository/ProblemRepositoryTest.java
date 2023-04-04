@@ -64,27 +64,12 @@ public class ProblemRepositoryTest {
         LongStream.range(10L,11L).forEach(l -> {
             solution = Solution.builder()
                     .solver("Woo")
-                    .problemId(problem).
+                    .problem(problem).
                     build();
             solutionRepository.save(solution);
         });
     }
-//    @Test
-//    public void save2(){
-//        Problem problem = Problem.builder()
-//                .problemId(190L)
-//                .type("answer")
-//                .writer("Eager")
-//                .title("Spring Boot의 장/단점 중 잘못된 것은 무엇일까요?")
-//                .content("Spring Boot의 장/단점 중 잘못된 것은 무엇인지 4가지 중에 골라주세요.")
-//                .answer("2")
-//                .level("bronze")
-//                .views(1L)
-//                .likes(1L)
-//                .build();
-//            problemRepository.save(problem);
-//        LongStream.range(189L,191L).forEach(l -> {problemHashtag = ProblemHashtag.builder().hashtagName("CS,Cloud").problemId(problem).build();
-//            hashTagRepository.save(problemHashtag);});
-//    }
+
+
 
 }

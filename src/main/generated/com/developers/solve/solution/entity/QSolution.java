@@ -30,7 +30,7 @@ public class QSolution extends EntityPathBase<Solution> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
 
-    public final com.developers.solve.problem.entity.QProblem problemId;
+    public final com.developers.solve.problem.entity.QProblem problem;
 
     public final NumberPath<Long> solutionId = createNumber("solutionId", Long.class);
 
@@ -57,7 +57,7 @@ public class QSolution extends EntityPathBase<Solution> {
 
     public QSolution(Class<? extends Solution> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.problemId = inits.isInitialized("problemId") ? new com.developers.solve.problem.entity.QProblem(forProperty("problemId")) : null;
+        this.problem = inits.isInitialized("problem") ? new com.developers.solve.problem.entity.QProblem(forProperty("problem")) : null;
     }
 
 }

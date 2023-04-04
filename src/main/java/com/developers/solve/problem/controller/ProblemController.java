@@ -16,6 +16,7 @@ import java.util.List;
 
 @Log4j2
 @RequiredArgsConstructor
+@RequestMapping("/api")
 @RestController
 public class ProblemController {
     private final ProblemService problemService;

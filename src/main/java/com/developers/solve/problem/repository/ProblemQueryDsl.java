@@ -61,7 +61,7 @@ public class ProblemQueryDsl {
     }
     public List<Problem> getProblemSortedBySolved(String order,String types,String level,String hashtag,Long likes,Long views,String createdTime, String writer){
         List<Problem> content = queryFactory.selectFrom(problem)
-                .where(problem.problemId.in(JPAExpressions.select(solution.problemId.problemId)
+                .where(problem.problemId.in(JPAExpressions.select(solution.problem.problemId)//두번째 problemId -> problem으로변경
                 .from(solution).where(containWriter(writer))),containHashTag(hashtag),CreatedTimeNoOffset(createdTime),LikesNoOffset(likes), ViewsNoOffset(views),containLevel(level),containType(types))
                 .orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order))
                 .limit(100)
