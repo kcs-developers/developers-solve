@@ -21,6 +21,10 @@ public class QAttached extends EntityPathBase<Attached> {
 
     public final NumberPath<Long> attachId = createNumber("attachId", Long.class);
 
+    public final StringPath pathName = createString("pathName");
+
+    public final NumberPath<Long> problemId = createNumber("problemId", Long.class);
+
     public QAttached(String variable) {
         super(Attached.class, forVariable(variable));
     }

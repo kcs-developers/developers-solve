@@ -5,17 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
-public class ProblemUpdateRequestDto {
+@Data
+public class AttachedDto {
+    private List<String> pathname;
     private Long problemId;
-    private String type;
-    private String writer;
-    private String title;
-    private String content;
-    private String answer;
-    private String hashTag;
-    private String level;
 }

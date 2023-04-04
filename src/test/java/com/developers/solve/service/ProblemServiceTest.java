@@ -23,43 +23,54 @@ public class ProblemServiceTest {
 
     @Test
     @DisplayName("Default(created_time) Test")
-    public void DefaultTest(){
+    public void DefaultTest() {
 
-        List response = problemService.NotIncludeSolvedSort("createdTime",null,null,null,null,null,null,null,null);
+        List response = problemService.NotIncludeSolvedSort("createdTime", null, null, null, null, null, null, null, null);
         System.out.println(response);
 
     }
+
     @Test
     @DisplayName("LikesOrder Test")
-    public void OrderLikesTest(){
-        List response = problemService.NotIncludeSolvedSort("likes",null,null,null,null,null,null,null,null);
+    public void OrderLikesTest() {
+        List response = problemService.NotIncludeSolvedSort("likes", null, null, null, null, null, null, null, null);
         System.out.println(response);
     }
+
     @Test
     @DisplayName("ViewsOrder Test")
-    public void OrderViewsTest(){
-        List response = problemService.NotIncludeSolvedSort("views",null,null,null,null,null,null,null,null);
+    public void OrderViewsTest() {
+        List response = problemService.NotIncludeSolvedSort("views", null, null, null, null, null, null, null, null);
         System.out.println(response);
     }
+
     @Test
     @DisplayName("OrderAndType")
-    public void OrderAndType(){
-        List response = problemService.NotIncludeSolvedSort("views","choice",null,null,null,null,null,null,null);
+    public void OrderAndType() {
+        List response = problemService.NotIncludeSolvedSort("views", "answer", null, null, null, null, null, null, null);
         System.out.println(response);
     }
+
     @Test
     @DisplayName("OrderAndTypeLevel")
-    public void OrderAndLevelType(){
-        List response = problemService.NotIncludeSolvedSort("views",null,"bronze",null,null,null,null,null,null);
+    public void OrderAndLevelType() {
+        List response = problemService.NotIncludeSolvedSort("views", null, "bronze", null, null, null, null, null, null);
         System.out.println(response);
     }
+
     @Test
     @DisplayName("OrderAndTypeLevelSolved")
-    public void OrderAndLevelTypeSolved(){
-            List response = problemService.IncludeSolvedSort("createdTime",null,null,"True",null,null,null,null,"Taeho");
-            System.out.println(response);
-        }
+    public void OrderAndLevelTypeSolved() {
+        List response = problemService.IncludeSolvedSort("createdTime", null, null, "True", null, null, null, null, "Taeho");
+        System.out.println(response);
     }
+
+//    @Test
+//    @DisplayName("OrderAndTypeLevelHashTag")
+//    public void OrderAndTypeLevelHashTag() {
+//
+//    }
+}
 //    @Test
 //    public void pdfdf(){
 //        List<ProblemSortResponseDTO> list = problemService.FirstSortProblem("likes", null, null,null, null, null,100L,null, "lango");

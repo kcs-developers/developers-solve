@@ -1,8 +1,10 @@
 package com.developers.solve.problem.entity;
 
 import com.developers.solve.common.entity.BaseTimeEntity;
+import com.developers.solve.problem.requestDTO.ProblemUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -14,6 +16,7 @@ import java.io.Serializable;
 @Getter
 @Where(clause = "deleted_at is NULL")
 @SQLDelete(sql = "update problem set deleted_at = CURRENT_TIMESTAMP where problem_id = ?")
+@DynamicUpdate
 @Entity
 public class Problem extends BaseTimeEntity implements Serializable {
     @Id
@@ -39,5 +42,27 @@ public class Problem extends BaseTimeEntity implements Serializable {
     private Long likes;
     @Column(name = "hashtag")
     private String hashtag;
-
+    public void updateProblem(ProblemUpdateRequestDto updateRequestDto) {
+        if (updateRequestDto.getTitle() != null) {
+            this.title = updateRequestDto.getTitle();
+        }
+        if (updateRequestDto.getContent() != null) {
+            this.content = updateRequestDto.getContent();
+        }
+        if (updateRequestDto.getAnswer() != null) {
+            this.answer = updateRequestDto.getAnswer();
+        }
+        if (updateRequestDto.getLevel() != null) {
+            this.level = updateRequestDto.getLevel();
+        }
+        if (updateRequestDto.getWriter() != null) {
+            this.writer = updateRequestDto.getWriter();
+        }
+        if (updateRequestDto.getHashTag() != null){
+            this.hashtag = updateRequestDto.getHashTag();
+        }
+        if (updateRequestDto.getType() != null) {
+            this.type = updateRequestDto.getType();
+        }
+    }
 }

@@ -12,26 +12,25 @@ import org.hibernate.annotations.Where;
 @AllArgsConstructor
 @NoArgsConstructor
 @Where(clause = "deleted_at is NULL")
-@SQLDelete(sql = "update solution set deleted_at = CURRENT_TIMESTAMP where solutionid = ?")
+@SQLDelete(sql = "update solution set deleted_at = CURRENT_TIMESTAMP where solution_id = ?")
 @Table(name="solution")
-@ToString(exclude = "problemId")
 
 public class Solution extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "solutionId")
+    @Column(name = "solution_id")
     private Long solutionId;
 
-    @Column(name = "writer", nullable = false)
-    private String writer;
+    @Column(name = "solver", nullable = false)
+    private String solver;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "problemId") // 가져온 외래키 명을 설정해주는 애노테이션
+    @JoinColumn(name = "problem_id",referencedColumnName = "problem_id") // 가져온 외래키 명을 설정해주는 애노테이션
     private Problem problemId;
 
     @Builder
     // 외래키는 값이 바뀌지 않고 PK도 바뀌지 않으므로 solver, solved만 빌갖
-    public Solution(String writer, Problem problemId) {
-        this.writer = writer;
+    public Solution(String solver, Problem problemId) {
+        this.solver = solver;
         this.problemId = problemId;
 
     }

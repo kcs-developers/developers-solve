@@ -18,4 +18,7 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
 
     @Query("SELECT p.likes FROM Problem p where p.problemId = :problemId")
     Long getLikesCnt(Long problemId);
+    List<Problem> findByTitleContaining(String search);
+    @Query("SELECT p from Problem p order by p.createdAt desc limit 500")
+    List<Problem> CreatedTimeSort();
 }
