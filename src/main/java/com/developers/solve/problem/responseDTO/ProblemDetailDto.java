@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -20,5 +22,6 @@ public class ProblemDetailDto { // view, likes, tag추가...
         private Long views;
         private Long likes;
         private Boolean solved;
+        private List<String> pathname;
     }
 

@@ -205,6 +205,7 @@ public class ProblemServiceImpl implements ProblemService {
     public ProblemDetailResponseDto problemDetail(Long problemId, String member){
         Problem problem = problemRepository.findById(problemId).orElseThrow();
         Boolean solved = solutionRepository.existsBySolverAndProblemIdProblemId(member, problemId);
+        List<String> pathname = attachedRepository.AttachedFile(problemId);
         System.out.println("solved:" + solved);
         ProblemDetailDto dto = ProblemDetailDto.builder()
                 .problemId(problem.getProblemId())
@@ -218,6 +219,7 @@ public class ProblemServiceImpl implements ProblemService {
                 .likes(problem.getLikes())
                 .views(problem.getViews())
                 .solved(solved)
+                .pathname(pathname)
                 .build();
 
         return ProblemDetailResponseDto.builder()
