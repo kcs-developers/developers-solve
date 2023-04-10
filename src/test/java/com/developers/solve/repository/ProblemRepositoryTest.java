@@ -26,7 +26,7 @@ public class ProblemRepositoryTest {
     public void save() {
 
         // given
-        LongStream.range(0L,50L).forEach(l -> {problem = Problem.builder()
+        LongStream.range(50L,100L).forEach(l -> {problem = Problem.builder()
                 .type("answer")
                 .writer("Taeho")
                 .title("Sex")
@@ -53,7 +53,7 @@ public class ProblemRepositoryTest {
         Problem problem = Problem.builder()
                 .problemId(48L)
                 .type("answer")
-                .writer("lango")
+                .writer("Taeho")
                 .title("Sex?")
                 .content("Spring Boot의 장/단점 중 잘못된 것은 무엇인지 4가지 중에 골라주세요.")
                 .answer("1")

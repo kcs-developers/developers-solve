@@ -18,7 +18,7 @@ import java.io.Serializable;
 @SQLDelete(sql = "update problem set deleted_at = CURRENT_TIMESTAMP where problem_id = ?")
 @DynamicUpdate
 @Entity
-public class Problem extends BaseTimeEntity implements Serializable {
+public class Problem extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "problem_id", nullable = false)
@@ -43,26 +43,12 @@ public class Problem extends BaseTimeEntity implements Serializable {
     @Column(name = "hashtag")
     private String hashtag;
     public void updateProblem(ProblemUpdateRequestDto updateRequestDto) {
-        if (updateRequestDto.getTitle() != null) {
             this.title = updateRequestDto.getTitle();
-        }
-        if (updateRequestDto.getContent() != null) {
             this.content = updateRequestDto.getContent();
-        }
-        if (updateRequestDto.getAnswer() != null) {
             this.answer = updateRequestDto.getAnswer();
-        }
-        if (updateRequestDto.getLevel() != null) {
             this.level = updateRequestDto.getLevel();
-        }
-        if (updateRequestDto.getWriter() != null) {
             this.writer = updateRequestDto.getWriter();
-        }
-        if (updateRequestDto.getHashTag() != null){
             this.hashtag = updateRequestDto.getHashTag();
-        }
-        if (updateRequestDto.getType() != null) {
             this.type = updateRequestDto.getType();
-        }
     }
 }

@@ -1,7 +1,11 @@
 package com.developers.solve.problem.entity;
 
+import com.developers.solve.common.entity.BaseTimeEntity;
+import com.developers.solve.problem.requestDTO.UpdatedAttachedDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Builder
@@ -10,7 +14,11 @@ import org.hibernate.annotations.Where;
 @ToString
 @Getter
 @Entity
-public class Attached {
+@Where(clause = "deleted_at is NULL")
+@Table(name = "attached")
+@SQLDelete(sql = "update attached set deleted_at = CURRENT_TIMESTAMP where problem_id = ?")
+@DynamicUpdate
+public class Attached extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attach_id")
