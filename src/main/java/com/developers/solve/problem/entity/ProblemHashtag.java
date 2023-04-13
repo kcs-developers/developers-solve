@@ -19,6 +19,6 @@ public class ProblemHashtag extends BaseTimeEntity {
     @Column(name = "hashtagName", nullable = false)
     private String hashtagName;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "problemId",nullable = false)
+    @JoinColumn(name = "problemId", nullable = false)
     private Problem problemId;
 }
