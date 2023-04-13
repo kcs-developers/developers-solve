@@ -1,3 +1,4 @@
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.4'
@@ -23,6 +24,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.testng:testng:7.1.0'
+    implementation 'org.jetbrains:annotations:23.0.0'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
@@ -32,10 +35,44 @@ dependencies {
     // spring rest docs
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    //Query dsl 의존성 추가
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+    //Cache를 위한 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    //Redis를 위한 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    //RestTemplate 연결 재시도를 위한 의존성 추가
+    implementation 'org.springframework.retry:spring-retry:1.2.5.RELEASE'
+    //Validation을 위한 의존성 추가
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
+
+
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+def querydslDir =  "src/main/generated"
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslDir]
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+}
+
+clean.doLast {
+    file(querydslDir).deleteDir()
 }
 
 ext { // (5)
