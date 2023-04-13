@@ -1,17 +1,16 @@
-package com.developers.solve.problem.requestDTO;
+package com.developers.solve.solution.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Data
-public class AttachedDto {
-    private List<String> pathname;
+@Builder
+public class SolutionRequest {
     private Long problemId;
+    private String nickname;
+    private Long id;
 }

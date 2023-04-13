@@ -21,4 +21,7 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
     List<Problem> findByTitleContaining(String search);
     @Query("SELECT p from Problem p order by p.createdAt desc limit 500")
     List<Problem> CreatedTimeSort();
+
+    @Query("SELECT p.writer from Problem p where p.problemId = :problemId")
+    String UpdateLicense(Long problemId);
 }
