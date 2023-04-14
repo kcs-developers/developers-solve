@@ -21,7 +21,6 @@ import java.util.Map;
 @Log4j2
 public class SolutionServiceImp implements SolutionService {
     private final ProblemRepository problemRepository;
-    private final RestTemplate restTemplate;
     private final SolutionRepository solutionRepository;
 
     @Override

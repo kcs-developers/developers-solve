@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.LongStream;
 
@@ -45,6 +46,7 @@ public class ProblemRepositoryTest {
     @Test
     public void save() {
 
+
         // given
         LongStream.range(50L,100L).forEach(l -> {problem = Problem.builder()
                 .type("answer")
@@ -58,7 +60,7 @@ public class ProblemRepositoryTest {
                 .likes(4L+l)
                 .hashtag("CS,FrontEnd,BackEnd,Cloud")
                 .build();
-        problemRepository.save(problem);});
+            problemRepository.save(problem);});
 
         // when
         List<Problem> problemList = problemRepository.findAll();
@@ -71,6 +73,8 @@ public class ProblemRepositoryTest {
     }
     @Test
     public void save1() {
+        List<String> answerCandidate = Arrays.asList("1", "2", "3", "4");
+
         Problem problem = Problem.builder()
                 .problemId(48L)
                 .type("answer")
@@ -78,7 +82,7 @@ public class ProblemRepositoryTest {
                 .title("Sex?")
                 .content("Spring Boot의 장/단점 중 잘못된 것은 무엇인지 4가지 중에 골라주세요.")
                 .answer("1")
-                .answer("1,2,3,4")
+                .answerCandidate(String.valueOf(answerCandidate))
                 .level("gold")
                 .views(94L)
                 .likes(32L)

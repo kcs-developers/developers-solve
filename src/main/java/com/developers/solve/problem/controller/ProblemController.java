@@ -34,7 +34,7 @@ public class ProblemController {
                                                                     @RequestParam(value = "likes", required = false) Long likes,
                                                                     @RequestParam(value = "createdTime", required = false) String createdTime,
                                                                     @RequestParam(value = "hashTag",required = false) String hashtag,
-                                                                    @RequestParam(value = "writer", required = true) String writer)
+                                                                    @RequestParam(value = "writer", required = false) String writer)
     {
         SortResponseDTO response;
         if(StringUtils.isNullOrEmpty(solved)) {
