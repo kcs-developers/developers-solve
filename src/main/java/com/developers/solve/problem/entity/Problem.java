@@ -9,6 +9,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import java.io.Serializable;
+import java.util.List;
+
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor

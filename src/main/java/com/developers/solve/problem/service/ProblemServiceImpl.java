@@ -35,7 +35,6 @@ import static java.util.stream.Collectors.toList;
 public class ProblemServiceImpl implements ProblemService {
     private final ProblemRepository problemRepository;
     private final ProblemQueryDsl problemRepositoryImp;
-    private final RestTemplate restTemplate;
     private final SolutionRepository solutionRepository;
     private final RedisTemplate<String, Object> redisTemplate;
     private final AttachedRepository attachedRepository;
@@ -73,7 +72,7 @@ public class ProblemServiceImpl implements ProblemService {
         }
     }
 
-    @Scheduled(fixedDelay = 1000L * 80L)
+    @Scheduled(fixedDelay = 1000L * 100L)
     @Transactional
     @Override
     public void deleteViewCntToRedis() {
@@ -84,7 +83,7 @@ public class ProblemServiceImpl implements ProblemService {
             String data = it.next();
             Long problemId = Long.parseLong(data.split("::")[1]);
             if (redisTemplate.opsForHash().get(data, hashkey) == null) {
-                break;
+                continue;
             }
             Long viewCnt = Long.parseLong((String.valueOf(redisTemplate.opsForHash().get(data, hashkey))));
             problemRepositoryImp.addViewCntFromRedis(problemId, viewCnt);
@@ -104,7 +103,7 @@ public class ProblemServiceImpl implements ProblemService {
             String data = it.next();
             Long problemId = Long.parseLong(data.split("::")[1]);
             if (redisTemplate.opsForHash().get(data, hashkey) == null) {
-                break;
+                continue;
             }
             Long likesCnt = Long.parseLong((String.valueOf(redisTemplate.opsForHash().get(data, hashkey))));
             problemRepositoryImp.addLikesCntFromRedis(problemId, likesCnt);
@@ -193,6 +192,8 @@ public class ProblemServiceImpl implements ProblemService {
                 .writer(request.getWriter())
                 .title(request.getTitle())
                 .content(request.getContent())
+                .likes(request.getLikes())
+                .views(request.getViews())
                 .answer(request.getAnswer())
                 .level(request.getLevel())
                 .answerCandidate(answerCandidate)
@@ -213,7 +214,8 @@ public class ProblemServiceImpl implements ProblemService {
     public ProblemDetailResponseDto problemDetail(Long problemId, String member) {
         Problem problem = problemRepository.findById(problemId).orElseThrow(NullpointException::new);
         Boolean solved = solutionRepository.existsBySolverAndProblemIdProblemId(member, problemId);
-        List<String> answerCandidate = problemRepository.ListAnswerCandidate(problemId);
+        String Candidate = problemRepository.ListAnswerCandidate(problemId);
+        List<String> answerCandidate = Arrays.stream(Candidate.split(",")).toList();
         List<String> pathname = attachedRepository.AttachedFile(problemId);
         System.out.println("solved:" + solved);
         ProblemDetailDto dto = ProblemDetailDto.builder()

@@ -36,11 +36,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.ArgumentMatchers.any;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
+import java.util.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -83,6 +79,8 @@ public class ProblemServiceTest {
             @Test
             @DisplayName("새로운 문제 작성")
             void createProblemSuccessCase(){
+                List<String> answerCandidate = Arrays.asList("1", "2", "3", "4");
+
                 ProblemSaveRequestDto problemSaveRequestDto = ProblemSaveRequestDto.builder()
                         .type(type)
                         .level(level)
@@ -91,16 +89,18 @@ public class ProblemServiceTest {
                         .answer(answer)
                         .content(content)
                         .tag(hashtag)
+                        .AnswerCandidate(answerCandidate)
                         .content(content)
                         .build();
-                Problem problem = Problem.builder().
-                        title(title).
-                        writer(writer).
-                        content(content).
-                        answer(answer).
-                        type(type).
-                        level(level).
-                        hashtag(hashtag)
+                Problem problem = Problem.builder()
+                        .title(title)
+                        .writer(writer)
+                        .content(content)
+                        .answer(answer)
+                        .answerCandidate(String.valueOf(answerCandidate))
+                        .type(type)
+                        .level(level)
+                        .hashtag(hashtag)
                         .build();
 
                 when(problemRepository.save(any(Problem.class))).thenReturn(problem);
