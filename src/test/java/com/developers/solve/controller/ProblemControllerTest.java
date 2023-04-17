@@ -75,7 +75,7 @@ public class ProblemControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(updatedAttachedDto)))
                 .andDo(MockMvcResultHandlers.print())
-                .andDo(document("s3/update",
+                .andDo(document("/api/s3/update",
                         Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
                         Preprocessors.preprocessResponse(Preprocessors.prettyPrint())))
                 .andExpect(MockMvcResultMatchers.status().isOk());
@@ -104,7 +104,7 @@ public class ProblemControllerTest {
         //when
         //요청을 전송하는 역할을 합니다.
         //결과로 ResultActions 객체를 받으며, ResultActions 객체는 리턴 값을 검증하고 확인할 수 있는 andExcpect() 메소드를 제공해줍니다.
-        mockMvc.perform(post("/s3/upload") //perform메소드는 인자로 RequestBuilder를 인터페이스를 받는다.
+        mockMvc.perform(post("/api/s3/upload") //perform메소드는 인자로 RequestBuilder를 인터페이스를 받는다.
                         .contentType(MediaType.APPLICATION_JSON)
                         //ObjectMapper 클래스의 writeValueAsString, writeValueAsBytes는
                         // Java 오브젝트로 부터 JSON을 만들고 이를 문자열 혹은 Byte 배열로 반환한다.
@@ -141,7 +141,7 @@ public class ProblemControllerTest {
                 .hashTag("hashTag")
                 .build()));
         //when
-        ResultActions resultActions = mockMvc.perform(get("/problem").param("search", search))
+        ResultActions resultActions = mockMvc.perform(get("/api/problem/list").param("search", search))
                 .andExpect(status().isOk())
                 .andDo(document("problem/likeSearch"
                         , relaxedQueryParameters(parameterWithName("search").description("search result")
@@ -152,13 +152,13 @@ public class ProblemControllerTest {
     @Test
     public void testDeleteProblem() throws Exception{
         //given
-        Long problemId = 1L;
+        Long problemId = 10L;
 
         String expected = "Complete Delete";
         given(problemService.deleteProblem(problemId)).willReturn(expected);
 
         //when
-        mockMvc.perform(delete("/problem/{problemId}",problemId
+        mockMvc.perform(delete("/api/problem/{problemId}",problemId
                         ,Preprocessors.preprocessRequest(Preprocessors.prettyPrint())
                         ,Preprocessors.preprocessResponse(Preprocessors.prettyPrint())))
                 .andExpect(status().isOk())
@@ -191,7 +191,7 @@ public class ProblemControllerTest {
 
 
         //when
-        mockMvc.perform(patch("/problem")
+        mockMvc.perform(patch("/api/problem")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(problemUpdateRequestDto)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -239,7 +239,7 @@ public class ProblemControllerTest {
         given(problemService.problemDetail(problemId,member))
                 .willReturn(expectedResponse);
 
-        mockMvc.perform(get("/problem/{problemId}/{member}",problemId, member
+        mockMvc.perform(get("/api/problem/{problemId}/{member}",problemId, member
                         ,Preprocessors.preprocessRequest(Preprocessors.prettyPrint())
                         ,Preprocessors.preprocessResponse(Preprocessors.prettyPrint())))
                 .andExpect(status().isOk())
@@ -274,7 +274,7 @@ public class ProblemControllerTest {
         given(problemService.save(saveRequestDto)).willReturn(responseDto);
 
 
-        mockMvc.perform(post("/problem")
+        mockMvc.perform(post("/api/problem")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(saveRequestDto)))
                 .andExpect(status().isOk())
@@ -308,7 +308,7 @@ public class ProblemControllerTest {
 
 //        given(problemService.addLikesCntToRedis(problemId)).willReturn()
 
-        mockMvc.perform(get("/problem/likes/{problemId}",problemId
+        mockMvc.perform(get("/api/problem/likes/{problemId}",problemId
                         ,Preprocessors.preprocessRequest(Preprocessors.prettyPrint())
                         ,Preprocessors.preprocessResponse(Preprocessors.prettyPrint())))
                 .andExpect(status().isOk())
@@ -352,7 +352,7 @@ public class ProblemControllerTest {
         given(problemService.CreatedTimeSortList()).willReturn(mockResult);
 
         // Send request to controller
-        MvcResult mvcResult = mockMvc.perform(get("/problem/list")
+        MvcResult mvcResult = mockMvc.perform(get("/api/problem/list")
                         .param("order", "createdTime")
                         .param("writer", "John Doe"))
                 .andExpect(status().isOk())
@@ -371,7 +371,7 @@ public class ProblemControllerTest {
                 .problemId(43L)
                 .build();
 
-        mockMvc.perform(post("/solution")
+        mockMvc.perform(post("/api/solution")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -385,35 +385,6 @@ public class ProblemControllerTest {
                 .andReturn();
     }
 
-//    @Test
-//    public voi
-
-
-
-
-//    @Test
-//    void addRoom() throws Exception {
-//        // given
-//        Long mentorId = 1L;
-//        String title = "방 제목";
-//        String description = "방 소개글";
-//
-//        // when
-//        String body = objectMapper.writeValueAsString(
-//                RoomAddRequestDto.builder()
-//                        .mentorId(mentorId)
-//                        .title(title)
-//                        .description(description)
-//                        .build()
-//        );
-//
-//        // then
-//        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL + "/update")
-//                        .content(body)
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andDo(print())
-//                .andExpect(status().isOk());
-//    }
 
 }
 
