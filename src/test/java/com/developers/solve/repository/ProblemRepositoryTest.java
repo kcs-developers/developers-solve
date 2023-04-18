@@ -30,7 +30,7 @@ public class ProblemRepositoryTest {
 
     @Test
     public void saveAttached(){
-        LongStream.range(1L,2L).forEach(l -> {attached = Attached.
+        LongStream.range(1L,4L).forEach(l -> {attached = Attached.
                 builder().
                 pathName("abc,dfdf").
                 problemId(2L).
@@ -48,13 +48,13 @@ public class ProblemRepositoryTest {
 
 
         // given
-        LongStream.range(50L,100L).forEach(l -> {problem = Problem.builder()
+        LongStream.range(50L,60L).forEach(l -> {problem = Problem.builder()
                 .type("answer")
                 .writer("Taeho")
                 .title("Sex")
                 .content("Spring Boot의 장/단점 중 잘못된 것은 무엇인지 4가지 중에 골라주세요.")
                 .answer("1")
-                .answerCandidate("1,2,3,4")
+                .answerCandidate("[]")
                 .level("bronze")
                 .views(200L+l)
                 .likes(4L+l)

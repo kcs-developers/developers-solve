@@ -8,3 +8,6 @@ spring:
 logging:
   level:
     org.hibernate.type.descriptor.sql: trace
+
+frontweb:
+  url: http://localhost:3000

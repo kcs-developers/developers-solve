@@ -2,6 +2,7 @@ package com.developers.solve.service;
 
 import com.developers.solve.problem.entity.Problem;
 import com.developers.solve.problem.repository.AttachedRepository;
+import com.developers.solve.problem.repository.ProblemQueryDsl;
 import com.developers.solve.problem.repository.ProblemRepository;
 import com.developers.solve.problem.requestDTO.ProblemSaveRequestDto;
 import com.developers.solve.problem.requestDTO.ProblemUpdateRequestDto;
@@ -41,6 +42,7 @@ import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ProblemServiceTest {
+
     @InjectMocks
     private SolutionServiceImp solutionService;
     @InjectMocks
@@ -360,8 +362,14 @@ public class ProblemServiceTest {
     @Test
     @DisplayName("ViewsOrder Test")
     public void OrderViewsTest() {
-        List response = problemService.NotIncludeSolvedSort("views", null, null, null, null, null, null, null, null);
+        List<ProblemSortResponseDTO> response = problemService.NotIncludeSolvedSort("views", null, null, null, null, null, null, null, null);
         System.out.println(response);
+    }
+    @Test
+    @DisplayName("Update License Check")
+    public void UpdateLicense(){
+        ProblemDetailResponseDto problemDetailResponseDto = problemService.problemDetail(2L,"lango");
+        System.out.println(problemDetailResponseDto);
     }
 
     @Test
