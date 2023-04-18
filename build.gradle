@@ -101,9 +101,19 @@ build { // (13)
     dependsOn copyDocument
 }
 
+// 빌드 시 서브 모듈의 설정을 포함시키기
+task copyPrivate(type: Copy) {
+    copy {
+        from './developers-secret'
+        include "application-solve-prod.yml"
+        into 'src/main/resources'
+    }
+}
+
 bootJar { // (14)
     dependsOn copyDocument
     from ("${asciidoctor.outputDir}") {
         into 'src/main/resources/static/docs'
     }
+    copyPrivate
 }

@@ -1,13 +1,11 @@
 spring:
   profiles:
-    active: local
+    active: prod
     group:
-      local: local
-      dev: dev
-      prod: prod
+      local: solve-local
+      dev: solve-dev
+      prod: solve-prod
+
 logging:
   level:
     org.hibernate.type.descriptor.sql: trace
-
-frontweb:
-  url: http://localhost:3000
