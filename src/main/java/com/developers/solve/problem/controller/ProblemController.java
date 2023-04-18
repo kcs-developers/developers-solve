@@ -59,7 +59,7 @@ public class ProblemController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
     //문제 등록
-    @PatchMapping("/problem")
+    @PostMapping("/problem")
     public ResponseEntity<ProblemSaveResponseDto> register(@Valid @RequestBody ProblemSaveRequestDto saveRequestDto){
         ProblemSaveResponseDto problemSaveResponseDto = problemService.save(saveRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(problemSaveResponseDto);
@@ -71,17 +71,13 @@ public class ProblemController {
         problemService.addViewCntToRedis(problemId);
         return ResponseEntity.status(HttpStatus.OK).body(detailResponseDto);
     }
-    @PostMapping("/test")
-    public String test(@RequestBody ProblemSaveRequestDto saveRequestDto){
-        return "SEX";
-    }
     //문제 좋아요 처리
     @PostMapping("/problem/{problemId}")
     public void likesAdd(@PathVariable Long problemId){
         problemService.addLikesCntToRedis(problemId);
     }
     //게시물 수정
-    @PutMapping("/problem")
+    @PatchMapping ("/problem")
     public ResponseEntity<ProblemUpdateResponseDto> update(@Valid @RequestBody ProblemUpdateRequestDto problemUpdateRequestDto){
         System.out.println(problemUpdateRequestDto);
         ProblemUpdateResponseDto updateResponseDto = problemService.update(problemUpdateRequestDto);

@@ -71,11 +71,11 @@ public class ProblemControllerTest {
         given(problemService.UpdateAttached(updatedAttachedDto)).willReturn(expectedResponse);
 
         // when
-        mockMvc.perform(MockMvcRequestBuilders.put("/s3/update") //perform메소드는 인자로 RequestBuilder를 인터페이스를 받는다.
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/s3/update") //perform메소드는 인자로 RequestBuilder를 인터페이스를 받는다.
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(updatedAttachedDto)))
                 .andDo(MockMvcResultHandlers.print())
-                .andDo(document("/api/s3/update",
+                .andDo(document("s3/update",
                         Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
                         Preprocessors.preprocessResponse(Preprocessors.prettyPrint())))
                 .andExpect(MockMvcResultMatchers.status().isOk());
@@ -124,7 +124,7 @@ public class ProblemControllerTest {
     @Test
     public void testSearchProblem() throws Exception {
         //given
-        String search = "spring boot";
+        String search = "spring";
 
         given(problemService.getListWithSearch(search)).willReturn(List.of(ProblemSortResponseDTO.builder()
                 .problemId(1L)
@@ -141,13 +141,13 @@ public class ProblemControllerTest {
                 .hashTag("hashTag")
                 .build()));
         //when
-        ResultActions resultActions = mockMvc.perform(get("/api/problem/list").param("search", search))
+        ResultActions resultActions = mockMvc.perform(get("/api/problem").param("search", search))
                 .andExpect(status().isOk())
                 .andDo(document("problem/likeSearch"
                         , relaxedQueryParameters(parameterWithName("search").description("search result")
                         )));
         //then
-        verify(problemService, times(1)).getListWithSearch("spring boot");
+        verify(problemService, times(1)).getListWithSearch("spring");
     }
     @Test
     public void testDeleteProblem() throws Exception{
@@ -264,7 +264,10 @@ public class ProblemControllerTest {
                 .level("silver")
                 .answer("2")
                 .tag("CS,TypeScript")
+                .views(0L) // views 필드 추가
+                .likes(0L) // likes 필드 추가
                 .build();
+
 
         ProblemSaveResponseDto responseDto = ProblemSaveResponseDto.builder()
                 .code(String.valueOf(HttpStatus.OK))
@@ -285,37 +288,20 @@ public class ProblemControllerTest {
     }
 
 
-    //    @Test
-//    void testAddLikesCntToRedis() throws Exception {
-//        // create a new problem and save to the database
-//        Problem problem = new Problem();
-//        problem.setLikesCnt(0L); // initialize likes count to 0
-//        problem = problemRepository.save(problem);
+//    @Test
+//    void problemLikesadd() throws Exception{
+//        Long problemId = 3L;
 //
-//        // perform a POST request to increase the likes count for the problem
-//        mockMvc.perform(post("/problems/" + problem.getId() + "/likes"))
-//                .andExpect(status().isOk());
+////        given(problemService.addLikesCntToRedis(problemId)).willReturn()
 //
-//        // check that the likes count was incremented by 1 in Redis
-//        String redisKey = "problemId::" + problem.getId();
-//        String redisHashKey = "likes";
-//        Long likesCnt = (Long) redisTemplate.opsForHash().get(redisKey, redisHashKey);
-//        assertThat(likesCnt).isEqualTo(1L);
+//        mockMvc.perform(get("/api/problem/likes/{problemId}",problemId
+//                        ,Preprocessors.preprocessRequest(Preprocessors.prettyPrint())
+//                        ,Preprocessors.preprocessResponse(Preprocessors.prettyPrint())))
+//                .andExpect(status().isOk())
+//                .andDo(document("problem/likesAdd",
+//                        pathParameters(parameterWithName("problemId").description("좋아요 증가")))
+//                );
 //    }
-    @Test
-    void problemLikesadd() throws Exception{
-        Long problemId = 3L;
-
-//        given(problemService.addLikesCntToRedis(problemId)).willReturn()
-
-        mockMvc.perform(get("/api/problem/likes/{problemId}",problemId
-                        ,Preprocessors.preprocessRequest(Preprocessors.prettyPrint())
-                        ,Preprocessors.preprocessResponse(Preprocessors.prettyPrint())))
-                .andExpect(status().isOk())
-                .andDo(document("problem/likesAdd",
-                        pathParameters(parameterWithName("problemId").description("좋아요 증가")))
-                );
-    }
 
     @Test //조건 검색 테스트
     public void sortProblem_shouldReturnSortedProblems() throws Exception {

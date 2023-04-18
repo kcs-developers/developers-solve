@@ -23,7 +23,7 @@ public class SolutionController {
 
 
     private final SolutionService solutionService;
-    @PostMapping("/solution")
+    @PostMapping("/api/solution")
     public ResponseEntity<SolutionResponse> save(@Valid @RequestBody SolutionRequest request){
         SolutionResponse response = solutionService.save(request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
