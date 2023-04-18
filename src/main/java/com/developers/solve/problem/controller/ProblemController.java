@@ -22,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(path = "/api")
 @RestController
+//@CrossOrigin("*") // 모든 요청에 접근 허용
 public class ProblemController {
     private final ProblemService problemService;
     //문제 다중 조건 검색
@@ -38,20 +39,11 @@ public class ProblemController {
     {
         SortResponseDTO response;
         if(StringUtils.isNullOrEmpty(solved)) {
-            if (StringUtils.isNullOrEmpty(types) && StringUtils.isNullOrEmpty(level) && StringUtils.isNullOrEmpty(hashtag) && order.equals("createdTime")){
-                List<ProblemSortResponseDTO> result = problemService.CreatedTimeSortList();
-                response = SortResponseDTO.
-                        builder().
-                        msg("Success sort").
-                        status("stauts Code 200").
-                        data(result).
-                        build();
-            }
             List<ProblemSortResponseDTO> result = problemService.NotIncludeSolvedSort(order, types, level, solved, hashtag, views, likes, createdTime, writer);
             response = SortResponseDTO.
                     builder().
                     msg("Success sort").
-                    status("stauts Code 200").
+                    status("status Code 200").
                     data(result).
                     build();
         }
@@ -60,7 +52,7 @@ public class ProblemController {
             response = SortResponseDTO.
                     builder().
                     msg("Success sort").
-                    status("stauts Code 200").
+                    status("status Code 200").
                     data(result).
                     build();
         }
@@ -85,7 +77,7 @@ public class ProblemController {
         problemService.addLikesCntToRedis(problemId);
     }
     //게시물 수정
-    @PatchMapping("/problem")
+    @PatchMapping ("/problem")
     public ResponseEntity<ProblemUpdateResponseDto> update(@Valid @RequestBody ProblemUpdateRequestDto problemUpdateRequestDto){
         System.out.println(problemUpdateRequestDto);
         ProblemUpdateResponseDto updateResponseDto = problemService.update(problemUpdateRequestDto);

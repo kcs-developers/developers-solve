@@ -15,6 +15,7 @@ import com.developers.solve.problem.responseDTO.*;
 import com.developers.solve.solution.repository.SolutionRepository;
 import com.querydsl.core.util.StringUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.HashOperations;
@@ -152,9 +153,7 @@ public class ProblemServiceImpl implements ProblemService {
     public List<ProblemSortResponseDTO> NotIncludeSolvedSort(String order, String types, String level, String solved, String hashtag, Long views, Long likes, String createdTime, String writer) {
         List<Problem> result = null;
         List<ProblemSortResponseDTO> problemSortResponseDTO;
-        if (StringUtils.isNullOrEmpty(solved)) {
             result = problemRepositoryImp.getProblemSortedByNotSolved(order, types, level, hashtag, likes, views, createdTime);
-        }
         if (result == null){
             return Collections.emptyList();
         }
@@ -167,7 +166,7 @@ public class ProblemServiceImpl implements ProblemService {
         List<Problem> result = null;
         List<ProblemSortResponseDTO> problemSortResponseDTO;
         if (!StringUtils.isNullOrEmpty(solved) && StringUtils.isNullOrEmpty(hashtag)) {
-            result = this.problemRepositoryImp.getProblemSortedBySolved(order, types, level, hashtag, likes, views, createdTime, writer);
+            result = problemRepositoryImp.getProblemSortedBySolved(order, types, level, hashtag, likes, views, createdTime, writer);
         }
         if (result == null){
             return Collections.emptyList();
@@ -215,7 +214,14 @@ public class ProblemServiceImpl implements ProblemService {
         Problem problem = problemRepository.findById(problemId).orElseThrow(NullpointException::new);
         Boolean solved = solutionRepository.existsBySolverAndProblemIdProblemId(member, problemId);
         String Candidate = problemRepository.ListAnswerCandidate(problemId);
-        List<String> answerCandidate = Arrays.stream(Candidate.split(",")).toList();
+        List<String> answerCandidate;
+
+        if (Candidate != null) {
+            answerCandidate = Arrays.stream(Candidate.split(",")).toList();
+        } else {
+            answerCandidate = new ArrayList<>();
+        }
+
         List<String> pathname = attachedRepository.AttachedFile(problemId);
         System.out.println("solved:" + solved);
         ProblemDetailDto dto = ProblemDetailDto.builder()
@@ -239,16 +245,14 @@ public class ProblemServiceImpl implements ProblemService {
                 .msg("정상적으로 조회 완료하였습니다.")
                 .data(dto)
                 .build();
-
     }
 
     //문제 수정
     @Transactional
     @Override
     public ProblemUpdateResponseDto update(ProblemUpdateRequestDto updateRequestDto) {
-            //수정 권한 확인
-            Optional<String> problem1 = Optional.of(problemRepository.UpdateLicense(updateRequestDto.getProblemId()));
-            problem1.orElseThrow(AccessException::new);
+        //가장 먼저 수정권한이 있는지 확인한다.
+        problemRepository.UpdateLicense(updateRequestDto.getProblemId(), updateRequestDto.getWriter()).orElseThrow(AccessException::new);
             //데이터 존재여부확인
             Problem problem = problemRepository.findById(updateRequestDto.getProblemId()).orElseThrow(NullPointerException::new);
                 problem.updateProblem(updateRequestDto);

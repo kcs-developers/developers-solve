@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProblemRepository extends JpaRepository<Problem, Long> {
     @Query("SELECT p.views FROM Problem p where p.problemId = :problemId")
@@ -22,8 +23,8 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
     @Query("SELECT p from Problem p order by p.createdAt desc limit 500")
     List<Problem> CreatedTimeSort();
 
-    @Query("SELECT p.writer from Problem p where p.problemId = :problemId")
-    String UpdateLicense(Long problemId);
+    @Query("SELECT p from Problem p where p.problemId = :problemId and p.writer = :nickname")
+    Optional<Problem> UpdateLicense(Long problemId, String nickname);
     @Query("SELECT p.answerCandidate from Problem p where p.problemId = :problemId")
     String ListAnswerCandidate(Long problemId);
 

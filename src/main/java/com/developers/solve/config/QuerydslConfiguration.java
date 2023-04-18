@@ -2,13 +2,14 @@ package com.developers.solve.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class QuerydslConfiguration {
-    @Autowired
+    @PersistenceContext
     EntityManager em;
 
     @Bean

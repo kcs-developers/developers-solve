@@ -8,7 +8,10 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.util.StringUtils;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import util.OrderByNull;
 
@@ -20,26 +23,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProblemQueryDsl {
     private final JPAQueryFactory queryFactory;
-
     QProblem problem = QProblem.problem;
     QSolution solution = QSolution.solution;
 
 
     private OrderSpecifier<Long> getProblemSortedByViews(String order){
-        if (!StringUtils.isNullOrEmpty(order) && order == "views") {
+        if (!StringUtils.isNullOrEmpty(order) && (order.equals("views"))) {
         return problem.views.desc();
     }
         else
             return OrderByNull.getDefault();
     }
     private OrderSpecifier<LocalDateTime> getProblemSortedByLocalTime(String order){
-        if (!StringUtils.isNullOrEmpty(order) && order == "createdTime"){
+        if (!StringUtils.isNullOrEmpty(order) && (order.equals("createdTime"))){
             return problem.createdAt.desc();}
         else
             return OrderByNull.getDefault();
     }
     private OrderSpecifier<Long> getProblemSortedByLikes(String order){
-        if (!StringUtils.isNullOrEmpty(order) && order == "likes")
+        if (!StringUtils.isNullOrEmpty(order) && (order.equals("likes")))
         {return problem.likes.desc();}
         else
             return OrderByNull.getDefault();
@@ -56,6 +58,7 @@ public class ProblemQueryDsl {
                 .orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order))
                 .limit(500)
                 .fetch();
+        System.out.println("동적 쿼리 실행 완료");
         return content;
     }
     public List<Problem> getProblemSortedBySolved(String order,String types,String level,String hashtag,Long likes,Long views,String createdTime, String writer){
