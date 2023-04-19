@@ -177,6 +177,7 @@ public class ProblemServiceImpl implements ProblemService {
 
     @Override
     public ProblemSaveResponseDto save(ProblemSaveRequestDto request) {
+        System.out.println(request.getAnswerCandidate());
         /*
          * 문제 등록시 작성자의 정보를 알아야 하기 때문에 사용자 관리 서비스에 API 요청이 필요하다.
          * 이 때, 사용자 서비스에 작성자 유효성 검사 API 요청하여 요청에 대한 응답으로 작성자의 닉네임을 반환받는다.
@@ -186,7 +187,7 @@ public class ProblemServiceImpl implements ProblemService {
 //        Map<String, String> res = restTemplate.getForObject(url, Map.class);
 //        String result = res.get("memberName");
         String answerCandidate = "";
-        if (request.getAnswerCandidate() == null){
+        if (request.getAnswerCandidate().isEmpty()){
             answerCandidate = "";
         } else{
         answerCandidate = request.getAnswerCandidate().stream().map(n -> String.valueOf(n)).collect(Collectors.joining(","));}
