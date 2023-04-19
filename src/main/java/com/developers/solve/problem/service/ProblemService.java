@@ -5,6 +5,8 @@ import com.developers.solve.problem.entity.Problem;
 import com.developers.solve.problem.responseDTO.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public interface ProblemService {
@@ -32,7 +34,18 @@ public interface ProblemService {
     @Transactional
     String deleteProblem(Long problemId);
     default ProblemSortResponseDTO EntityToDto(Problem problem) {
-
+        List<String> answerCandidate;
+        List<String> hashTag;
+        if (problem.getHashtag() != null) {
+            hashTag = Arrays.stream(problem.getHashtag().split(",")).toList();
+        } else {
+            hashTag = new ArrayList<>();
+        }
+        if (problem.getAnswerCandidate() != null) {
+            answerCandidate = Arrays.stream(problem.getAnswerCandidate().split(",")).toList();
+        } else {
+            answerCandidate = new ArrayList<>();
+        }
             ProblemSortResponseDTO dto = ProblemSortResponseDTO.
                     builder().
                     answer(problem.getAnswer()).
@@ -45,7 +58,8 @@ public interface ProblemService {
                     problemId(problem.getProblemId()).
                     type(problem.getType()).
                     createdTime(problem.getCreatedAt()).
-                    hashTag(problem.getHashtag()).
+                    hashTag(hashTag).
+                    answerCandidate(answerCandidate).
                     build();
         return dto;
     }

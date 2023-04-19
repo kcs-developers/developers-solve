@@ -58,7 +58,6 @@ public class ProblemQueryDsl {
                 .orderBy(getProblemSortedByLikes(order),getProblemSortedByViews(order),getProblemSortedByLocalTime(order))
                 .limit(500)
                 .fetch();
-        System.out.println("동적 쿼리 실행 완료");
         return content;
     }
     public List<Problem> getProblemSortedBySolved(String order,String types,String level,String hashtag,Long likes,Long views,String createdTime, String writer){
