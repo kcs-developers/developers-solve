@@ -27,7 +27,7 @@ public class ProblemSaveRequestDto {
     @NotNull(message = "null은 불가능합니다.(최소 0을 입력해주세요)")
     private Long likes;
     @Nullable
-    private List<String> AnswerCandidate;
+    private List<String> answerCandidate;
     @NotBlank(message = "난이도를 설정해주세요.")
     private String level;
     @Nullable
