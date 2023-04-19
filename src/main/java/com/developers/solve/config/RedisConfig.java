@@ -29,6 +29,8 @@ public class RedisConfig{
 
     @Value("${spring.data.redis.port}")
     public int port;
+    @Value("${spring.data.redis.timeout}")
+    private Long timeout;
 
     @Bean
     public LettuceConnectionFactory lettuceConnectionFactory() {

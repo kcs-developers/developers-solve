@@ -125,7 +125,7 @@ public class ProblemControllerTest {
     public void testSearchProblem() throws Exception {
         //given
         String search = "spring";
-
+        List<String> hash = Arrays.asList("Cs", "java", "good");
         given(problemService.getListWithSearch(search)).willReturn(List.of(ProblemSortResponseDTO.builder()
                 .problemId(1L)
                 .type("type")
@@ -138,7 +138,7 @@ public class ProblemControllerTest {
                 .views(0L)
                 .likes(0L)
                 .createdTime(LocalDateTime.now())
-                .hashTag("hashTag")
+                .hashTag(hash)
                 .build()));
         //when
         ResultActions resultActions = mockMvc.perform(get("/api/problem").param("search", search))
@@ -173,15 +173,18 @@ public class ProblemControllerTest {
     @Test
     public void testUpdateProblem() throws Exception {
         //given
+        List <String> tag = Arrays.asList("ttag","test");
+        List <String> answer = Arrays.asList("test1","test2","test3");
         ProblemUpdateRequestDto problemUpdateRequestDto = ProblemUpdateRequestDto.builder()
                 .problemId(5L)
                 .level("silver")
                 .answer("yeop")
                 .content("what is this")
                 .title("updated title")
+                .answerCandidate(answer)
                 .writer("yeop")
                 .type("choice")
-                .hashTag("CS, TypeScript")
+                .hashTag(tag.toString())
                 .build();
 
         given(problemService.update(problemUpdateRequestDto)).willReturn(ProblemUpdateResponseDto.builder()
@@ -204,7 +207,8 @@ public class ProblemControllerTest {
                                 fieldWithPath("content").description("Content of the problem"),
                                 fieldWithPath("type").description("Type of the problem"),
                                 fieldWithPath("hashTag").description("Hashtags for the problem"),
-                                fieldWithPath("level").description("level for the problem")
+                                fieldWithPath("level").description("level for the problem"),
+                                fieldWithPath("answerCandidate").description("answer candidate for the problem")
                         )
                 ));
         //then
@@ -307,6 +311,7 @@ public class ProblemControllerTest {
     public void sortProblem_shouldReturnSortedProblems() throws Exception {
         // Mock service response
         List<ProblemSortResponseDTO> mockResult = new ArrayList<>();
+        List<String> hashtag = Arrays.asList("good","CS","kakao");
         mockResult.add(ProblemSortResponseDTO.builder()
                 .problemId(1L)
                 .type("type1")
@@ -319,7 +324,7 @@ public class ProblemControllerTest {
                 .views(10L)
                 .likes(5L)
                 .createdTime(LocalDateTime.now())
-                .hashTag("hashtag1")
+                .hashTag(hashtag)
                 .build());
         mockResult.add(ProblemSortResponseDTO.builder()
                 .problemId(2L)
@@ -333,7 +338,7 @@ public class ProblemControllerTest {
                 .views(20L)
                 .likes(15L)
                 .createdTime(LocalDateTime.now().minusDays(1))
-                .hashTag("hashtag2")
+                .hashTag(hashtag)
                 .build());
         given(problemService.CreatedTimeSortList()).willReturn(mockResult);
 
