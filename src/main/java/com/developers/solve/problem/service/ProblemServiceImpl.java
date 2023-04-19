@@ -185,7 +185,11 @@ public class ProblemServiceImpl implements ProblemService {
 //        String url = "http://192.168.99.13:9000/api/member/" + request.getId();
 //        Map<String, String> res = restTemplate.getForObject(url, Map.class);
 //        String result = res.get("memberName");
-        String answerCandidate = request.getAnswerCandidate().stream().map(n -> String.valueOf(n)).collect(Collectors.joining(","));
+        String answerCandidate = "";
+        if (request.getAnswerCandidate() == null){
+            answerCandidate = "";
+        } else{
+        answerCandidate = request.getAnswerCandidate().stream().map(n -> String.valueOf(n)).collect(Collectors.joining(","));}
         Problem problem = Problem.builder()
                 .type(request.getType())
                 .writer(request.getWriter())

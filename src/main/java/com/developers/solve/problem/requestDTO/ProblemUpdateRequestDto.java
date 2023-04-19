@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -19,12 +21,13 @@ public class ProblemUpdateRequestDto {
     private String type;
     @NotBlank(message = "수정 권한이 없습니다.")
     private String writer;
-    @Nullable
+    @NotBlank(message = "제목을 작성해주세요")
     private String title;
-    @Nullable
+    @NotBlank(message = "내용을 수정해주세요")
     private String content;
-    @Nullable
+    @NotBlank(message = "정답을 수정해주세요")
     private String answer;
+    private List<String> answerCandidate;
     @Nullable
     private String hashTag;
     @Nullable
