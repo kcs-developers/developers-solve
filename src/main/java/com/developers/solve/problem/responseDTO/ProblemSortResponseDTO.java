@@ -22,11 +22,11 @@ public class ProblemSortResponseDTO {
     private String content;
     private String answer;
     private String level;
-    private String tag;
     private Long views;
     private Long likes;
     private LocalDateTime createdTime;
     private List<String> hashTag;
     private List<String> answerCandidate;
+    private String pathname;
 
     }

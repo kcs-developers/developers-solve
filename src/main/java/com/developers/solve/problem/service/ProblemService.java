@@ -60,6 +60,7 @@ public interface ProblemService {
                     createdTime(problem.getCreatedAt()).
                     hashTag(hashTag).
                     answerCandidate(answerCandidate).
+                    pathname(problem.getPathname()).
                     build();
         return dto;
     }

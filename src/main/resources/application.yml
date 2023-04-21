@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prod
+    active: solve-prod
     group:
       local: solve-local
       dev: solve-dev

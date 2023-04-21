@@ -31,7 +31,9 @@ public class ProblemSaveRequestDto {
     @NotBlank(message = "난이도를 설정해주세요.")
     private String level;
     @Nullable
-    private String tag;
+    private String hashTag;
+    @Nullable
+    private String pathname;
 
 }
 

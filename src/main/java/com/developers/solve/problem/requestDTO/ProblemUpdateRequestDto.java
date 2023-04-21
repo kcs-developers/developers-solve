@@ -32,4 +32,6 @@ public class ProblemUpdateRequestDto {
     private String hashTag;
     @Nullable
     private String level;
+    @Nullable
+    private String pathname;
 }

@@ -134,7 +134,6 @@ public class ProblemControllerTest {
                 .content("content")
                 .answer("answer")
                 .level("level")
-                .tag("tag")
                 .views(0L)
                 .likes(0L)
                 .createdTime(LocalDateTime.now())
@@ -185,6 +184,7 @@ public class ProblemControllerTest {
                 .writer("yeop")
                 .type("choice")
                 .hashTag(tag.toString())
+                .pathname("이미지")
                 .build();
 
         given(problemService.update(problemUpdateRequestDto)).willReturn(ProblemUpdateResponseDto.builder()
@@ -208,7 +208,9 @@ public class ProblemControllerTest {
                                 fieldWithPath("type").description("Type of the problem"),
                                 fieldWithPath("hashTag").description("Hashtags for the problem"),
                                 fieldWithPath("level").description("level for the problem"),
-                                fieldWithPath("answerCandidate").description("answer candidate for the problem")
+                                fieldWithPath("answerCandidate").description("answer candidate for the problem"),
+                                fieldWithPath("pathname").description("pathname for the problem")
+
                         )
                 ));
         //then
@@ -259,6 +261,7 @@ public class ProblemControllerTest {
 
     @Test
     public void registerProblem() throws Exception{
+        List<String> hash = Arrays.asList("Cs", "java", "good");
 
         ProblemSaveRequestDto saveRequestDto = ProblemSaveRequestDto.builder()
                 .writer("yeop")
@@ -267,7 +270,7 @@ public class ProblemControllerTest {
                 .type("CHOICE")
                 .level("silver")
                 .answer("2")
-                .tag("CS,TypeScript")
+                .hashTag(hash.toString())
                 .views(0L) // views 필드 추가
                 .likes(0L) // likes 필드 추가
                 .build();
@@ -320,11 +323,10 @@ public class ProblemControllerTest {
                 .content("Content1")
                 .answer("Answer1")
                 .level("level1")
-                .tag("tag1")
+                .hashTag(hashtag)
                 .views(10L)
                 .likes(5L)
                 .createdTime(LocalDateTime.now())
-                .hashTag(hashtag)
                 .build());
         mockResult.add(ProblemSortResponseDTO.builder()
                 .problemId(2L)
@@ -334,7 +336,6 @@ public class ProblemControllerTest {
                 .content("Content2")
                 .answer("Answer2")
                 .level("level2")
-                .tag("tag2")
                 .views(20L)
                 .likes(15L)
                 .createdTime(LocalDateTime.now().minusDays(1))

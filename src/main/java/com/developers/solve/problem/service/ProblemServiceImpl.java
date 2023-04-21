@@ -201,7 +201,7 @@ public class ProblemServiceImpl implements ProblemService {
                 .answer(request.getAnswer())
                 .level(request.getLevel())
                 .answerCandidate(answerCandidate)
-                .hashtag(request.getTag())
+                .hashtag(request.getHashTag())
                 .build();
 
         Optional<Long> problem2 = Optional.of(problemRepository.save(problem).getProblemId());
@@ -227,7 +227,6 @@ public class ProblemServiceImpl implements ProblemService {
             answerCandidate = new ArrayList<>();
         }
 
-        List<String> pathname = attachedRepository.AttachedFile(problemId);
         System.out.println("solved:" + solved);
         ProblemDetailDto dto = ProblemDetailDto.builder()
                 .problemId(problem.getProblemId())
@@ -242,7 +241,7 @@ public class ProblemServiceImpl implements ProblemService {
                 .views(problem.getViews())
                 .answerCandidate(answerCandidate)
                 .solved(solved)
-                .pathname(pathname)
+                .pathname(problem.getPathname())
                 .build();
 
         return ProblemDetailResponseDto.builder()
