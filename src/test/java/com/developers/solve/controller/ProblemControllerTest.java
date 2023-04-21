@@ -369,7 +369,6 @@ public class ProblemControllerTest {
                 .andExpect(status().isOk())
                 .andDo(document("problem/saveSolution",
                         requestFields(
-                                fieldWithPath("id").description("문제푼 회원 ID"),
                                 fieldWithPath("solver").description("문제푼 회원 이름"),
                                 fieldWithPath("problemId").description("푼 문제 ID")
                         )

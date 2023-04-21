@@ -202,6 +202,7 @@ public class ProblemServiceImpl implements ProblemService {
                 .level(request.getLevel())
                 .answerCandidate(answerCandidate)
                 .hashtag(request.getHashTag())
+                .pathname(request.getPathname())
                 .build();
 
         Optional<Long> problem2 = Optional.of(problemRepository.save(problem).getProblemId());
