@@ -16,5 +16,4 @@ public class SolutionRequest {
     private Long problemId;
     @NotBlank(message = "올바르지 않는 경로입니다.")
     private String solver;
-    private Long id;
 }

@@ -30,7 +30,7 @@ public class ProblemUpdateRequestDto {
     private List<String> answerCandidate;
     @Nullable
     private String hashTag;
-    @Nullable
+    @NotBlank(message = "난이도를 수정해주세요")
     private String level;
     @Nullable
     private String pathname;
