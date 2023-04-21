@@ -49,16 +49,16 @@
 //
 //        // given
 //        LongStream.range(50L,60L).forEach(l -> {problem = Problem.builder()
-//                .type("answer")
+//                .type("choice")
 //                .writer("Taeho")
 //                .title("Sex")
 //                .content("Spring Boot의 장/단점 중 잘못된 것은 무엇인지 4가지 중에 골라주세요.")
 //                .answer("1")
-//                .answerCandidate("[1,2,3,4]")
+//                .answerCandidate("1 : 헤이,2 : 호우,3 : 빕,4 : 날두")
 //                .level("bronze")
 //                .views(200L+l)
 //                .likes(4L+l)
-//                .hashtag("CS,FrontEnd,BackEnd,Cloud")
+//                .hashtag("cs,frontEnd,backEnd,Cloud")
 //                .build();
 //            problemRepository.save(problem);});
 //

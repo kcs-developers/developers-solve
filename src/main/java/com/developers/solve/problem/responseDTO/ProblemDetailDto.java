@@ -25,6 +25,6 @@ public class ProblemDetailDto { // view, likes, tag추가...
         private Long likes;
         private Boolean solved;
         private List<String> answerCandidate;
-        private List<String> pathname;
+        private String pathname;
     }
 

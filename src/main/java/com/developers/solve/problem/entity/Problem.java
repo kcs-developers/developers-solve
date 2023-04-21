@@ -9,7 +9,10 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Builder
@@ -46,6 +49,8 @@ public class Problem extends BaseTimeEntity {
     private Long likes;
     @Column(name = "hashtag")
     private String hashtag;
+    @Column(name = "pathname")
+    private String pathname;
     public void updateProblem(ProblemUpdateRequestDto updateRequestDto) {
             this.title = updateRequestDto.getTitle();
             this.content = updateRequestDto.getContent();
@@ -54,5 +59,13 @@ public class Problem extends BaseTimeEntity {
             this.writer = updateRequestDto.getWriter();
             this.hashtag = updateRequestDto.getHashTag();
             this.type = updateRequestDto.getType();
+            this.pathname = updateRequestDto.getPathname();
+            List<String>updatedAnswerCandidate = updateRequestDto.getAnswerCandidate();
+            String candidate = "";
+        if (updatedAnswerCandidate.isEmpty()){
+            candidate = "";
+        } else{
+            candidate = updatedAnswerCandidate.stream().map(n -> String.valueOf(n)).collect(Collectors.joining(","));}
+            this.answerCandidate = candidate;
     }
 }

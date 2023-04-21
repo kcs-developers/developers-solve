@@ -27,5 +27,4 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
     Optional<Problem> UpdateLicense(Long problemId, String nickname);
     @Query("SELECT p.answerCandidate from Problem p where p.problemId = :problemId")
     String ListAnswerCandidate(Long problemId);
-
 }
