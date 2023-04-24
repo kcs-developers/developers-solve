@@ -82,7 +82,7 @@ public class ProblemServiceImpl implements ProblemService {
         Iterator<String> it = Rediskey.iterator();
         while (it.hasNext()) {
             String data = it.next();
-            Long problemId = Long.parseLong(data.split("::")[1]);
+            Long problemId = Long.parseLong(data.split("$")[1]);
             if (redisTemplate.opsForHash().get(data, hashkey) == null) {
                 continue;
             }
@@ -102,7 +102,7 @@ public class ProblemServiceImpl implements ProblemService {
         Iterator<String> it = RedisKey.iterator();
         while (it.hasNext()) {
             String data = it.next();
-            Long problemId = Long.parseLong(data.split("::")[1]);
+            Long problemId = Long.parseLong(data.split("$")[1]);
             if (redisTemplate.opsForHash().get(data, hashkey) == null) {
                 continue;
             }
@@ -190,7 +190,7 @@ public class ProblemServiceImpl implements ProblemService {
         if (request.getAnswerCandidate().isEmpty()){
             answerCandidate = "";
         } else{
-        answerCandidate = request.getAnswerCandidate().stream().map(n -> String.valueOf(n)).collect(Collectors.joining(","));}
+        answerCandidate = request.getAnswerCandidate().stream().map(n -> String.valueOf(n)).collect(Collectors.joining("%"));}
         Problem problem = Problem.builder()
                 .type(request.getType())
                 .writer(request.getWriter())
@@ -223,7 +223,7 @@ public class ProblemServiceImpl implements ProblemService {
         List<String> answerCandidate;
 
         if (Candidate != null) {
-            answerCandidate = Arrays.stream(Candidate.split(",")).toList();
+            answerCandidate = Arrays.stream(Candidate.split("%")).toList();
         } else {
             answerCandidate = new ArrayList<>();
         }
