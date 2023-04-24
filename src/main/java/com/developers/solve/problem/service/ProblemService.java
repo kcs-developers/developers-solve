@@ -42,7 +42,7 @@ public interface ProblemService {
             hashTag = new ArrayList<>();
         }
         if (problem.getAnswerCandidate() != null) {
-            answerCandidate = Arrays.stream(problem.getAnswerCandidate().split("$")).toList();
+            answerCandidate = Arrays.stream(problem.getAnswerCandidate().split("!")).toList();
         } else {
             answerCandidate = new ArrayList<>();
         }
