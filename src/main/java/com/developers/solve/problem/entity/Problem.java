@@ -65,7 +65,7 @@ public class Problem extends BaseTimeEntity {
         if (updatedAnswerCandidate.isEmpty()){
             candidate = "";
         } else{
-            candidate = updatedAnswerCandidate.stream().map(n -> String.valueOf(n)).collect(Collectors.joining(","));}
+            candidate = updatedAnswerCandidate.stream().map(n -> String.valueOf(n)).collect(Collectors.joining("!"));}
             this.answerCandidate = candidate;
     }
 }
