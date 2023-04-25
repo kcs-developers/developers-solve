@@ -11,7 +11,71 @@
 
 === 문제 등록(Problem Save)
 Request
-// include::{snippets}/problem/save/http-request.adoc[]
+include::{snippets}/problem/saveProblem/http-request.adoc[]
 
 Response
-// include::{snippets}/problem/save/http-response.adoc[]
+include::{snippets}/problem/saveProblem/http-response.adoc[]
+
+=== 문제 수정(Problem Save)
+
+Request
+include::{snippets}/problem/updateProblem/http-request.adoc[]
+
+Response
+include::{snippets}/problem/updateProblem/http-response.adoc[]
+
+=== 문제 수정(Problem Update)
+
+Request
+include::{snippets}/problem/updateProblem/http-request.adoc[]
+
+Response
+include::{snippets}/problem/updateProblem/http-response.adoc[]
+
+=== 문제 삭제(Problem Delete)
+
+Request
+include::{snippets}/problem/deleteProblem/http-request.adoc[]
+
+Response
+include::{snippets}/problem/deleteProblem/http-response.adoc[]
+
+=== 문제 상세 조회(Problem Detail)
+
+Request
+include::{snippets}/problem/detailProblem/http-request.adoc[]
+
+Response
+include::{snippets}/problem/detailProblem/http-response.adoc[]
+
+=== 문제 목록 조회 - 좋아요순(Problem Search - order by like)
+
+Request
+include::{snippets}/problem/likeSearch/http-request.adoc[]
+
+Response
+include::{snippets}/problem/detailProblem/http-response.adoc[]
+
+=== 문제 목록 조회 (Problem Search)
+
+Request
+include::{snippets}/problem/search/http-request.adoc[]
+
+Response
+include::{snippets}/problem/search/http-response.adoc[]
+
+=== 문제 게시글 첨부파일 등록 (Problem Attach apply)
+
+Request
+include::{snippets}/s3/uplooad/http-request.adoc[]
+
+Response
+include::{snippets}/s3/uplooad/http-response.adoc[]
+
+=== 문제 게시글 첨부파일 변경 (Problem Attach update)
+
+Request
+include::{snippets}/s3/update/http-request.adoc[]
+
+Response
+include::{snippets}/s3/update/http-response.adoc[]
