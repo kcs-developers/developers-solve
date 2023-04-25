@@ -50,8 +50,16 @@ dependencies {
     //Validation을 위한 의존성 추가
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
 
+    implementation 'javax.xml.bind:jaxb-api:2.3.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
 
+    // security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
 
+    // jwt
+    implementation 'com.google.code.gson:gson:2.9.1'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
 }
 
 tasks.named('test') {
@@ -94,7 +102,7 @@ asciidoctor { // (7)
 task copyDocument(type: Copy) { // (12)
     dependsOn asciidoctor
     from file("build/docs/asciidoc/")
-    into file("src/main/resources/static/docs")
+    into file("src/main/resources/static/docs/solve")
 }
 
 build { // (13)
@@ -113,7 +121,7 @@ task copyPrivate(type: Copy) {
 bootJar { // (14)
     dependsOn copyDocument
     from ("${asciidoctor.outputDir}") {
-        into 'src/main/resources/static/docs'
+        into 'src/main/resources/static/docs/solve'
     }
     copyPrivate
 }
