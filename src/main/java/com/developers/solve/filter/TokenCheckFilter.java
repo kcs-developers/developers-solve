@@ -67,14 +67,23 @@ public class TokenCheckFilter extends OncePerRequestFilter {
         // 클라이언트의 URI 확인하기
         String path = request.getRequestURI();
         log.info("[TokenCheckFilter] request URI: {}", path);
+        log.info("[TokenCheckFilter] request Method: {}", request.getMethod());
         /**
          * 인증 처리가 필요없다면 TokenCheckFilter 로직을 수횅할 필요가 없음.
          * 사용자: 로그인, 회원가입
          * 문제풀이: 전체 문제 목록 조회
          * 멘토링: 전체 방 목록 조회
          */
-        if (path.startsWith("/api/problem/list") || path.startsWith("/api/problem/*/*")) {
+        if (path.startsWith("/api/problem/list")) {
             log.info("[TokenCheckFilter] Skip Token Check Filter, path: {}", path);
+            log.info("[TokenCheckFilter] 문제 검색 - 인증 불필요");
+            filterChain.doFilter(request, response);
+            return;
+        }
+        // 문제 상세 페이지의 경우 인증없이 접근해야함.
+        if(path.startsWith("/api/problem/") && request.getMethod().equals("GET")) {
+            log.info("[TokenCheckFilter] Skip Token Check Filter, path: {}", path);
+            log.info("[TokenCheckFilter] 문제 상세 페이지 - 인증 불필요");
             filterChain.doFilter(request, response);
             return;
         }
