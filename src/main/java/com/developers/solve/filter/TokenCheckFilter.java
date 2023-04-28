@@ -76,7 +76,7 @@ public class TokenCheckFilter extends OncePerRequestFilter {
          */
         if (path.startsWith("/api/problem/list")) {
             log.info("[TokenCheckFilter] Skip Token Check Filter, path: {}", path);
-            log.info("[TokenCheckFilter] 문제 검색 - 인증 불필요");
+            log.info("[TokenCheckFilter] 문제 목록 조회 - 인증 불필요");
             filterChain.doFilter(request, response);
             return;
         }
@@ -87,6 +87,13 @@ public class TokenCheckFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        if(path.startsWith("/api/problem") && request.getMethod().equals("GET")) {
+            log.info("[TokenCheckFilter] Skip Token Check Filter, path: {}", path);
+            log.info("[TokenCheckFilter] 문제 검색 - 인증 불필요");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         // api로 시작하지 않는 요청이라면 다음 필터로 넘긴다.
         // doFilterInternal는 리턴 타입이 void이기 때문에 리턴을 안해도 될 것 같지만, 리턴을 반드시 해야한다.
         // return을 만날 때까지 무조건 수행된다.
